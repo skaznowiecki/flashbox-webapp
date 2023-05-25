@@ -44,7 +44,7 @@ const allSections = [
     title: 'Proveedores',
     value: 'SupplierList',
     name: 'supplier',
-    role: ['superadmin', 'admin'],
+    role: ['superadmin', 'admin', 'user'],
     active: true
   },
 
