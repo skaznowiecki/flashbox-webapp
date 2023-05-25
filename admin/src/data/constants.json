@@ -1,0 +1,133 @@
+{
+  "colors": [
+    {
+      "id": "F44336",
+      "name": "Rojo"
+    },
+    {
+      "id": "E91E63",
+      "name": "Rosa"
+    },
+    {
+      "id": "9C27B0",
+      "name": "Morado"
+    },
+    {
+      "id": "673AB7",
+      "name": "Morado oscuro"
+    },
+    {
+      "id": "3F51B5",
+      "name": "Azul"
+    },
+    {
+      "id": "03A9F4",
+      "name": "Azul claro"
+    },
+    {
+      "id": "00BCD4",
+      "name": "Cian"
+    },
+    {
+      "id": "009688",
+      "name": "Verde"
+    },
+    {
+      "id": "8BC34A",
+      "name": "Verde claro"
+    },
+    {
+      "id": "CDDC39",
+      "name": "Lima"
+    }
+  ],
+  "companies": [
+    { "key": "Todos", "value": "" },
+    { "key": "INTERMEDIO S.R.L.", "value": 2 },
+    { "key": "FLASHBOX", "value": 1 }
+  ],
+  "months": [
+    {
+      "value": "",
+      "key": "Todos"
+    },
+    {
+      "value": 1,
+      "key": "Enero"
+    },
+    {
+      "value": 2,
+      "key": "Febrero"
+    },
+    {
+      "value": 3,
+      "key": "Marzo"
+    },
+    {
+      "value": 4,
+      "key": "Abril"
+    },
+    {
+      "value": 5,
+      "key": "Mayo"
+    },
+    {
+      "value": 6,
+      "key": "Junio"
+    },
+    {
+      "value": 7,
+      "key": "Julio"
+    },
+    {
+      "value": 8,
+      "key": "Agosto"
+    },
+    {
+      "value": 9,
+      "key": "Septiembre"
+    },
+    {
+      "value": 10,
+      "key": "Octubre"
+    },
+    {
+      "value": 11,
+      "key": "Noviembre"
+    },
+    {
+      "value": 12,
+      "key": "Diciembre"
+    }
+  ],
+  "payrollStatus": [
+    {
+      "value": "",
+      "key": "Todos"
+    },
+    {
+      "value": "PENDIENTE",
+      "key": "Pendiente"
+    },
+    {
+      "value": "PROCESANDO",
+      "key": "Procesando"
+    },
+    {
+      "value": "ADJUNTADA",
+      "key": "Adjuntada"
+    },
+    {
+      "value": "PAGADO",
+      "key": "Pagado"
+    },
+    {
+      "value": "NO_PAGADO",
+      "key": "No pagado"
+    },
+    {
+      "value": "ERROR",
+      "key": "Error"
+    }
+  ]
+}
