@@ -4,13 +4,13 @@ on:
   push:
     branches: [main]
     paths:
-      - "supply/**"
+      - "admin/**"
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./supply
+        working-directory: ./admin
 
     steps:
       - uses: actions/checkout@v3
@@ -24,14 +24,14 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: website-artifact
-          path: supply/dist
+          path: admin/dist
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     env:
-      BUCKET: s3://portalfacturas.app/
-      DISTRIBUTION_ID: E1CQH53WN8K5LF
+      BUCKET: s3://admin.portalfacturas.app/
+      DISTRIBUTION_ID: E23SJH1E7HI5YS
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
