@@ -1,4 +1,4 @@
-name: deploy-website-to-s3
+name: deploy-website-to-s3 [supply]
 run-name: Deploy supply website to production
 on:
   push:
