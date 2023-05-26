@@ -25,6 +25,7 @@ jobs:
         with:
           name: website-artifact
           path: admin/dist
+          retention-days: 1
 
   deploy:
     runs-on: ubuntu-latest
