@@ -102,7 +102,8 @@ const filters = reactive({
   businessId: '',
   from: '',
   to: '',
-  payrollStatus: ''
+  payrollStatus: '',
+  tags: []
 })
 
 const emitter = defineEmits(['change'])
