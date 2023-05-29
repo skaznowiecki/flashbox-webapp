@@ -19,7 +19,7 @@ import { API } from 'aws-amplify'
 import PayrollList from '@/components/PayrollList.vue'
 import PayrollFilter from '@/components/PayrollFilter.vue'
 import PayrollNotFound from '@/components/PayrollNotFound.vue'
-
+const NUMBER_OF_MONTHS = 2
 const route = useRoute()
 
 const payrolls = ref([])
@@ -52,22 +52,35 @@ const payrollToDisplay = computed(() => {
 })
 
 const currentPayroll = computed(() => {
-  const year = new Date().getFullYear()
-  const month = new Date().getMonth() + 1
+  const dates = getCurrentAndPreviousMonths(NUMBER_OF_MONTHS)
 
   return payrolls.value.filter((item) => {
-    return item.year === year && item.month === month
+    return dates.some((date) => {
+      return item.year === date[0] && item.month === date[1]
+    })
   })
 })
 
 const historyPayroll = computed(() => {
-  const year = new Date().getFullYear()
-  const month = new Date().getMonth() + 1
+  const dates = getCurrentAndPreviousMonths(NUMBER_OF_MONTHS)
 
   return payrolls.value.filter((item) => {
-    return item.year !== year || item.month !== month
+    return !dates.some((date) => {
+      return item.year === date[0] && item.month === date[1]
+    })
   })
 })
+
+const getCurrentAndPreviousMonths = (numberOfMonths) => {
+  const today = new Date()
+  const previousMonths = []
+
+  for (let i = 0; i < numberOfMonths; i++) {
+    const previousMonth = new Date(today.getFullYear(), today.getMonth() - i, 1)
+    previousMonths.push([previousMonth.getFullYear(), previousMonth.getMonth() + 1])
+  }
+  return previousMonths
+}
 
 const uploadFile = async ({ file, payroll }) => {
   loading.value = true
