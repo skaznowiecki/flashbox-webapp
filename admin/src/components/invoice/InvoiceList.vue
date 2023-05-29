@@ -7,7 +7,11 @@
           <th class="text-center">Tags</th>
           <th class="text-center">CUIL/CUIT</th>
           <th class="text-center">Empresa</th>
+
           <th class="text-center">Total</th>
+
+          <th class="text-center">Liquidacion</th>
+
           <th class="text-center">Emision</th>
           <th class="text-center">Recepcion</th>
           <!-- <th class="text-center">Estado</th> -->
@@ -24,6 +28,9 @@
           <td class="text-center">{{ item.business.name }}</td>
 
           <td class="text-center">${{ Number(item.total) }}</td>
+
+          <td class="text-center">{{ item.payroll ? `$${item.payroll.amount}` : 'S/L' }}</td>
+
           <td class="text-center">{{ item.dateOfIssue }}</td>
           <td class="text-center">
             <AppDate :datetime="item.createdAt" />

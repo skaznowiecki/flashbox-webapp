@@ -12,7 +12,8 @@
           <th class="text-center">Detalle</th>
           <th class="text-center">Status</th>
           <th class="text-center" style="width: 10%">Link</th>
-          <th class="text-center">Monto</th>
+          <th class="text-center">Monto Liquidado</th>
+          <th class="text-center">Monto Facturado</th>
 
           <th class="text-center">Acciones</th>
         </tr>
@@ -45,6 +46,11 @@
           </td>
 
           <td class="text-center">${{ item.amount }}</td>
+          <td class="text-center">
+            <span v-if="item.bill">${{ item.bill.total }}</span>
+            <span v-else>S/F</span>
+          </td>
+
           <td class="text-center">
             <v-row align="center" justify="center">
               <v-col cols="auto">
