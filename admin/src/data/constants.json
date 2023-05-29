@@ -129,5 +129,7 @@
       "value": "ERROR",
       "key": "Error"
     }
-  ]
+  ],
+  "POSITIVE_PERCENTAGE_THRESHOLD": 0.01,
+  "NEGATIVE_PERCENTAGE_THRESHOLD": 0.1
 }

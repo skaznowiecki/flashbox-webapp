@@ -29,7 +29,9 @@
 
           <td class="text-center">${{ Number(item.total) }}</td>
 
-          <td class="text-center">{{ item.payroll ? `$${item.payroll.amount}` : 'S/L' }}</td>
+          <td class="text-center">
+            <Amount :bill="item" :payroll="item.payroll" type="payroll" />
+          </td>
 
           <td class="text-center">{{ item.dateOfIssue }}</td>
           <td class="text-center">
@@ -54,7 +56,7 @@ table thead {
 <script setup>
 import { computed } from 'vue'
 import SupplierTag from '@/components/shared/SupplierTag.vue'
-
+import Amount from '@/components/shared/Amount.vue'
 const props = defineProps({
   invoices: {
     type: Array,

@@ -47,8 +47,7 @@
 
           <td class="text-center">${{ item.amount }}</td>
           <td class="text-center">
-            <span v-if="item.bill">${{ item.bill.total }}</span>
-            <span v-else>S/F</span>
+            <Amount :bill="item.bill" :payroll="item" type="bill" />
           </td>
 
           <td class="text-center">
@@ -79,7 +78,8 @@ table thead {
 import { computed } from 'vue'
 import SupplierTag from '@/components/shared/SupplierTag.vue'
 
-import { months, companies } from '@/data/constants.json'
+import { months } from '@/data/constants.json'
+import Amount from '@/components/shared/Amount.vue'
 const emitter = defineEmits(['delete'])
 
 const props = defineProps({

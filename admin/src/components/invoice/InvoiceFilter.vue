@@ -62,6 +62,17 @@
           variant="outlined"
         ></v-select>
       </v-col>
+
+      <v-col cols="12" md="3">
+        <v-select
+          v-model="filters.payrollStatus"
+          :items="payrollStatus"
+          label="Liquidacion [estado]"
+          item-title="key"
+          item-value="value"
+          variant="outlined"
+        ></v-select>
+      </v-col>
     </v-row>
   </v-col>
 </template>
@@ -69,6 +80,7 @@
 <script setup>
 import { watch } from 'vue'
 import { reactive } from 'vue'
+import { payrollStatus } from '@/data/constants.json'
 
 const companies = [
   { key: 'TODOS', value: '' },
@@ -89,7 +101,8 @@ const filters = reactive({
   email: '',
   businessId: '',
   from: '',
-  to: ''
+  to: '',
+  payrollStatus: ''
 })
 
 const emitter = defineEmits(['change'])
