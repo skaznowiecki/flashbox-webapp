@@ -10,7 +10,9 @@
       />
     </v-col>
     <v-col cols="auto" v-if="shouldShowViewButton">
-      <VBtn :href="payroll.bill.invoiceUrl" size="small" :disabled="disabled"> Ver </VBtn>
+      <VBtn :href="payroll.bill.invoiceUrl" size="small" :disabled="disabled" target="_blank">
+        Ver
+      </VBtn>
     </v-col>
   </v-row>
 </template>
