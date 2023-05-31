@@ -83,6 +83,13 @@ const getCurrentAndPreviousMonths = (numberOfMonths) => {
 }
 
 const uploadFile = async ({ file, payroll }) => {
+  if (!file) return
+
+  if (file.type !== 'application/pdf') {
+    alert('El archivo debe ser un PDF')
+    return
+  }
+
   loading.value = true
 
   const { formData, uploadUrl, key } = await API.get('api', `/invoices/upload`)
@@ -93,6 +100,7 @@ const uploadFile = async ({ file, payroll }) => {
   })
 
   form.append('file', file)
+
   await fetch(uploadUrl, {
     method: 'POST',
     body: form

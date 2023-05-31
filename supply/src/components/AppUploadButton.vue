@@ -19,6 +19,7 @@ const emitter = defineEmits(['attached'])
 
 const onFileChanged = ($event) => {
   const target = $event.target
+
   if (target && target.files) {
     emitter('attached', target.files[0])
   }
