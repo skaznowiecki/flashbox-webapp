@@ -12,18 +12,33 @@
       <v-col cols="8" md="8">
         <v-row justify="end">
           <v-col cols="auto">
-            <v-btn prepend-icon="mdi-file-import" variant="outlined" @click="emitter('openImport')">
+            <v-btn
+              prepend-icon="mdi-file-import"
+              variant="outlined"
+              @click="emitter('openImport')"
+              :disabled="!canAction('import-supplier')"
+            >
               Importar
             </v-btn>
           </v-col>
 
           <v-col cols="auto">
-            <v-btn prepend-icon="mdi-tag" variant="outlined" @click="emitter('openListTags')">
+            <v-btn
+              prepend-icon="mdi-tag"
+              variant="outlined"
+              @click="emitter('openListTags')"
+              :disabled="!canAction('list-tags')"
+            >
               Ver tags
             </v-btn>
           </v-col>
           <v-col cols="auto">
-            <v-btn prepend-icon="mdi-tag-plus" variant="outlined" @click="emitter('openAddTag')">
+            <v-btn
+              prepend-icon="mdi-tag-plus"
+              variant="outlined"
+              @click="emitter('openAddTag')"
+              :disabled="!canAction('create-tag')"
+            >
               Agregar tag
             </v-btn>
           </v-col>
@@ -35,6 +50,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useAuthorizer } from '@/composables/authorizer'
+
+const { canAction } = useAuthorizer()
 
 defineProps({
   supplierWithOutTags: {

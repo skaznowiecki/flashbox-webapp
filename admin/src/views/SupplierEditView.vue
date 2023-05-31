@@ -28,6 +28,7 @@ let supplier = reactive({
   idNumber: '',
   condition: '',
   startDate: '',
+  paymentPeriod: '',
   tags: [],
   tagIds: [],
   accountBank: ''

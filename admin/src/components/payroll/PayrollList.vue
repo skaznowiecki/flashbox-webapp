@@ -58,6 +58,7 @@
                   @click="emitter('delete', item)"
                   variant="outlined"
                   :loading="loading"
+                  :disabled="!canAction('delete-payroll')"
                 >
                   Eliminar
                 </v-btn>
@@ -69,17 +70,18 @@
     </VTable>
   </VCol>
 </template>
-<style scoped>
-table thead {
-  background-color: #eceff1;
-}
-</style>
+
 <script setup>
 import { computed } from 'vue'
 import SupplierTag from '@/components/shared/SupplierTag.vue'
 
 import { months } from '@/data/constants.json'
 import Amount from '@/components/shared/Amount.vue'
+
+import { useAuthorizer } from '@/composables/authorizer'
+
+const { canAction } = useAuthorizer()
+
 const emitter = defineEmits(['delete'])
 
 const props = defineProps({

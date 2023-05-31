@@ -9,7 +9,7 @@
     </v-row>
     <v-row justify="center" align="center" v-else>
       <v-col cols="auto">
-        <v-btn density="compact" :disabled="true">Sin Tags</v-btn>
+        <v-btn :disabled="true" size="small">Sin Tags</v-btn>
       </v-col>
     </v-row>
   </div>

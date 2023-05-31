@@ -7,6 +7,8 @@ import App from './App.vue'
 import router from './router'
 import '@mdi/font/css/materialdesignicons.css'
 
+import '@/assets/custom.css'
+
 import 'vuetify/styles'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
 

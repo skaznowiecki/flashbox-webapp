@@ -77,6 +77,14 @@
           variant="outlined"
         ></v-select>
       </VCol>
+      <VCol cols="4">
+        <v-text-field
+          label="Periodo pago"
+          type="number"
+          v-model="supplier.paymentPeriod"
+          variant="outlined"
+        ></v-text-field>
+      </VCol>
     </VRow>
   </div>
 </template>

@@ -52,7 +52,7 @@ const allSections = [
     title: 'Liquidacion',
     value: 'PayrollList',
     name: 'payroll',
-    role: ['superadmin', 'admin'],
+    role: ['superadmin', 'admin', 'user'],
     active: true
   }
 ]

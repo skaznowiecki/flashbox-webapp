@@ -3,7 +3,7 @@
     <VRow class="mt-1">
       <InvoiceFilter @change="filter" :tags="tags" />
       <InvoiceAction @download="downloadExcel" :loading="downloadBtnLoading" />
-      <InvoiceList :invoices="invoices" :pages="pages" />
+      <InvoiceList :invoices="invoices" :pages="pages" @delete="deleteInvoice" :loading="loading" />
       <Pagination :pages="pages" @changePage="changePage" />
     </VRow>
   </AppModernLayout>
@@ -22,6 +22,8 @@ let invoices = ref([])
 let pages = ref(1)
 let currentPage = 1
 let listFilters = {}
+
+let loading = ref(false)
 
 let tags = ref([])
 
@@ -65,6 +67,15 @@ const downloadExcel = async () => {
   downloadBtnLoading.value = false
 
   window.location.href = url
+}
+
+const deleteInvoice = async ({ id }) => {
+  loading.value = true
+
+  await API.del('api', `/invoices/${id}`)
+  fetchInvoices(listFilters)
+
+  loading.value = false
 }
 
 onMounted(() => {

@@ -17,8 +17,16 @@
         ></v-text-field>
       </v-col>
 
-      <v-col cols="12" md="3">
+      <!-- <v-col cols="12" md="3">
         <v-text-field v-model="filters.email" label="Email" variant="outlined"></v-text-field>
+      </v-col> -->
+      <v-col cols="12" md="3">
+        <v-text-field
+          v-model="filters.paymentDate"
+          label="Fecha de pago"
+          type="date"
+          variant="outlined"
+        ></v-text-field>
       </v-col>
 
       <v-col cols="12" md="3">
@@ -102,6 +110,7 @@ const filters = reactive({
   businessId: '',
   from: '',
   to: '',
+  paymentDate: '',
   payrollStatus: '',
   tags: []
 })

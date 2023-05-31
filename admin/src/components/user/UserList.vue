@@ -51,11 +51,7 @@
     </VTable>
   </VCol>
 </template>
-<style scoped>
-table thead {
-  background-color: #eceff1;
-}
-</style>
+
 <script setup>
 defineProps({
   users: {

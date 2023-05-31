@@ -14,8 +14,10 @@
 
           <th class="text-center">Emision</th>
           <th class="text-center">Recepcion</th>
-          <!-- <th class="text-center">Estado</th> -->
+          <th class="text-center">Fecha pago</th>
+
           <th class="text-center">Link</th>
+          <th class="text-center">Accion</th>
         </tr>
       </thead>
       <tbody class="text-body-2">
@@ -39,7 +41,23 @@
           </td>
 
           <td class="text-center">
+            <AppDate :datetime="item.paymentDate" v-if="item.paymentDate !== null" />
+            <span v-else>-</span>
+          </td>
+
+          <td class="text-center">
             <VBtn :href="item.invoiceUrl" target="_blank" variant="outlined" size="small">PDF</VBtn>
+          </td>
+
+          <td class="text-center">
+            <VBtn
+              variant="outlined"
+              size="small"
+              :disabled="!canDeleteInvoice(item)"
+              :loading="loading"
+              @click="emitter('delete', item)"
+              >Eliminar</VBtn
+            >
           </td>
         </tr>
       </tbody>
@@ -47,19 +65,29 @@
   </VCol>
 </template>
 
-<style scoped>
-table thead {
-  background-color: #eceff1;
-}
-</style>
-
 <script setup>
 import { computed } from 'vue'
+
+import { useAuthorizer } from '@/composables/authorizer'
+
+const { canAction } = useAuthorizer()
+
 import SupplierTag from '@/components/shared/SupplierTag.vue'
 import Amount from '@/components/shared/Amount.vue'
+
+const emitter = defineEmits(['delete'])
+
+const canDeleteInvoice = (item) => {
+  return canAction('delete-invoice') && item.payroll === null
+}
+
 const props = defineProps({
   invoices: {
     type: Array,
+    required: true
+  },
+  loading: {
+    type: Boolean,
     required: true
   }
 })

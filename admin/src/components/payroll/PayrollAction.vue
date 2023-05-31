@@ -7,6 +7,7 @@
           variant="outlined"
           @click="emitter('openImport')"
           :loading="loading"
+          :disabled="!canAction('import-payroll')"
         >
           Importar
         </v-btn>
@@ -27,6 +28,10 @@
 
 <script setup>
 const emitter = defineEmits(['openImport', 'download'])
+
+import { useAuthorizer } from '@/composables/authorizer'
+
+const { canAction } = useAuthorizer()
 
 defineProps({
   loading: {
