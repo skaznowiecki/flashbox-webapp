@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-center justify-center mt-10">
     <v-card class="mx-auto" width="800" v-if="exists" :loading="loading">
-      <v-card-title class="text-center text-h4"> Liquidacion </v-card-title>
+      <v-card-title class="text-center text-h4"> Liquidación </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
         <PayrollFilter @update:toggle="updateToggle" />

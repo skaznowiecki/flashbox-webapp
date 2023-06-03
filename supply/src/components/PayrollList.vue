@@ -5,7 +5,7 @@
         <thead>
           <tr>
             <th class="text-left" width="20%">Fecha</th>
-            <th class="text-left" width="10%">Monto</th>
+            <th class="text-left" width="10%">Monto Neto</th>
             <th class="text-center" width="20%">Mensaje</th>
             <th class="text-center" width="40%">Accion</th>
           </tr>
