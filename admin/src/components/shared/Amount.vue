@@ -62,28 +62,44 @@ const check = computed(() => {
   }
 
   const payrollAmount = Number(props.payroll.amount)
+  const payrollWithTax = payrollAmount * 1.21
+
   const billAmount = Number(props.bill.total)
 
   if (billAmount === payrollAmount) {
     return [true, null]
   }
 
-  const amountWithTax = billAmount * 1.21
-
-  if (amountWithTax === payrollAmount) {
+  if (billAmount === payrollWithTax) {
     return [true, null]
   }
 
-  const diff = billAmount - payrollAmount
+  const matchWithoutTax = checkThreshold(billAmount, payrollAmount)
+  const matchWithTax = checkThreshold(billAmount, payrollAmount)
 
-  if (diff > 0 && diff / billAmount > POSITIVE_PERCENTAGE_THRESHOLD) {
-    return [false, 'El monto de la factura es mayor al de la liquidacion']
+  if (matchWithoutTax || matchWithTax) {
+    return [true, null]
   }
 
-  if (diff < 0 && diff / billAmount > NEGATIVE_PERCENTAGE_THRESHOLD) {
-    return [false, 'El monto de la factura es menor al de la liquidacion']
-  }
-
-  return [true, null]
+  return [false, 'El monto de la factura es diferente al de la liquidacion']
 })
+
+const checkThreshold = (value, expectedValue) => {
+  const diff = value - expectedValue
+  const percentage = diff / value
+
+  if (percentage < 0) {
+    if (Math.abs(percentage) <= NEGATIVE_PERCENTAGE_THRESHOLD) {
+      return true
+    } else {
+      return false
+    }
+  } else {
+    if (percentage <= POSITIVE_PERCENTAGE_THRESHOLD) {
+      return true
+    } else {
+      return false
+    }
+  }
+}
 </script>

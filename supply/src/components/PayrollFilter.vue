@@ -3,7 +3,7 @@
     <v-col cols="auto">
       <v-btn-toggle v-model="toggle" shaped mandatory>
         <v-btn value="current"> Actual </v-btn>
-        <v-btn value="history"> Historico </v-btn>
+        <v-btn value="history"> Histórico </v-btn>
       </v-btn-toggle>
     </v-col>
   </VRow>
