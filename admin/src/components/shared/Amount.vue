@@ -57,6 +57,10 @@ const title = computed(() => {
 })
 
 const check = computed(() => {
+  if (props.bill.supplierId !== props.payroll.supplierId) {
+    return [false, 'El proveedor de la factura no coincide con el de la liquidacion']
+  }
+
   const payrollAmount = Number(props.payroll.amount)
   const billAmount = Number(props.bill.total)
 
