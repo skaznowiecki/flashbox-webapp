@@ -4,26 +4,27 @@
       <UserAction @createUser="openCreateUserForm" />
       <UserList :users="users" @changeRole="changeRole" @deleteUser="deleteUser" />
       <DynamoPagination :nextToken="nextToken" @changePage="changePage" v-if="nextToken !== null" />
-      <VDialog v-model="userForm" persistent width="1024">
+      <!-- <VDialog v-model="userForm" persistent width="1024">
         <UserForm
           :loading="userCreateLoading"
           @submit="createUser"
           @updateUserForm="updateUserForm"
         />
-      </VDialog>
+      </VDialog> -->
     </VRow>
   </AppModernLayout>
 </template>
 
 <script setup>
 import { API } from 'aws-amplify'
+import { ref, onMounted } from 'vue'
 
 import AppModernLayout from '@/layouts/AppModernLayout.vue'
+
 import UserAction from '@/components/user/UserAction.vue'
 import DynamoPagination from '@/components/shared/DynamoPagination.vue'
 import UserList from '@/components/user/UserList.vue'
-import { ref, onMounted } from 'vue'
-import UserForm from '@/components/user/UserForm.vue'
+// import UserForm from '@/components/user/UserForm.vue'
 
 let userForm = ref(false)
 let userCreateLoading = ref(false)
@@ -63,6 +64,7 @@ const fetchUsers = async (token) => {
 }
 
 const changePage = (token) => {
+  console.log(token)
   fetchUsers(token)
 }
 

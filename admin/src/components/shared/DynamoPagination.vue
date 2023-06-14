@@ -23,13 +23,13 @@
 <script setup>
 import { ref } from 'vue'
 const props = defineProps({
-  nextToken: {
+  token: {
     type: String | null,
     required: false
   }
 })
 let prevToken = ref([])
-let nextToken = ref(props.nextToken || null)
+let nextToken = ref(props.token || null)
 
 const emitter = defineEmits(['changePage'])
 
