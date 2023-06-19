@@ -3,14 +3,14 @@
     <VRow class="mt-1">
       <UserAction @createUser="openCreateUserForm" />
       <UserList :users="users" @changeRole="changeRole" @deleteUser="deleteUser" />
-      <DynamoPagination :nextToken="nextToken" @changePage="changePage" v-if="nextToken !== null" />
-      <!-- <VDialog v-model="userForm" persistent width="1024">
+      <DynamoPagination :token="nextToken" @changePage="changePage" v-if="nextToken !== null" />
+      <VDialog v-model="userForm" persistent width="1024">
         <UserForm
           :loading="userCreateLoading"
           @submit="createUser"
           @updateUserForm="updateUserForm"
         />
-      </VDialog> -->
+      </VDialog>
     </VRow>
   </AppModernLayout>
 </template>
@@ -24,7 +24,7 @@ import AppModernLayout from '@/layouts/AppModernLayout.vue'
 import UserAction from '@/components/user/UserAction.vue'
 import DynamoPagination from '@/components/shared/DynamoPagination.vue'
 import UserList from '@/components/user/UserList.vue'
-// import UserForm from '@/components/user/UserForm.vue'
+import UserForm from '@/components/user/UserForm.vue'
 
 let userForm = ref(false)
 let userCreateLoading = ref(false)
