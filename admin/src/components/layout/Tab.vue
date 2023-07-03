@@ -41,6 +41,13 @@ const allSections = [
     active: true
   },
   {
+    title: 'Notas de credito',
+    value: 'CreditNoteList',
+    name: 'credit-note',
+    role: ['superadmin', 'admin', 'user'],
+    active: true
+  },
+  {
     title: 'Proveedores',
     value: 'SupplierList',
     name: 'supplier',

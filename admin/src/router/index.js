@@ -9,6 +9,8 @@ import SupplierListView from '@/views/SupplierListView.vue'
 import PayrollListView from '@/views/PayrollListView.vue'
 
 import InvoiceListView from '@/views/InvoiceListView.vue'
+import CreditNoteListView from '@/views/CreditNoteListView.vue'
+
 import SupplierEditView from '@/views/SupplierEditView.vue'
 
 import { useAuthStore } from '@/stores/AuthStore'
@@ -34,6 +36,16 @@ const router = createRouter({
         requiresAuth: true,
         title: 'Facturas',
         section: 'invoice'
+      }
+    },
+    {
+      path: '/credit-notes',
+      name: 'CreditNoteList',
+      component: CreditNoteListView,
+      meta: {
+        requiresAuth: true,
+        title: 'Notas de crédito',
+        section: 'credit-note'
       }
     },
     {
