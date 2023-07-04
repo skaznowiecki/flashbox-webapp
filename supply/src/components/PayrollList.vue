@@ -4,10 +4,11 @@
       <v-table height="500px" fixed-header>
         <thead>
           <tr>
-            <th class="text-left" width="20%">Fecha</th>
-            <th class="text-left" width="10%">Monto Neto</th>
+            <th class="text-center" width="20%">Fecha</th>
+            <th class="text-center" width="10%">Monto Neto</th>
             <th class="text-center" width="20%">Mensaje</th>
-            <th class="text-center" width="40%">Accion</th>
+            <th class="text-center" width="30%">Accion</th>
+            <th class="text-center" width="10%">Ver</th>
           </tr>
         </thead>
         <tbody>
@@ -17,6 +18,16 @@
             <td>{{ item.message ?? '' }}</td>
             <td>
               <PayrollListButton :payroll="item" @uploadFile="uploadFile" :loading="loading" />
+            </td>
+            <td>
+              <VBtn
+                :href="item.bill.invoiceUrl"
+                size="small"
+                target="_blank"
+                v-if="item.bill !== null"
+              >
+                Ver
+              </VBtn>
             </td>
           </tr>
         </tbody>

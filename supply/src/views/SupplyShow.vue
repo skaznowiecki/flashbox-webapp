@@ -19,6 +19,7 @@ import { API } from 'aws-amplify'
 import PayrollList from '@/components/PayrollList.vue'
 import PayrollFilter from '@/components/PayrollFilter.vue'
 import PayrollNotFound from '@/components/PayrollNotFound.vue'
+
 const NUMBER_OF_MONTHS = 2
 const route = useRoute()
 
@@ -82,7 +83,7 @@ const getCurrentAndPreviousMonths = (numberOfMonths) => {
   return previousMonths
 }
 
-const uploadFile = async ({ file, payroll }) => {
+const uploadFile = async ({ file, payroll, bill, isCreditNote }) => {
   if (!file) return
 
   if (file.type !== 'application/pdf') {
@@ -106,15 +107,11 @@ const uploadFile = async ({ file, payroll }) => {
     body: form
   })
 
-  await API.post('api', '/invoices/', {
-    body: {
-      key,
-      provider: 'SUPPLIER',
-      metadata: {
-        payrollId: payroll.id
-      }
-    }
-  })
+  if (isCreditNote) {
+    await uploadCreditNote(key, payroll, bill)
+  } else {
+    await uploadInvoice(payroll, key)
+  }
 
   const index = payrolls.value.findIndex((item) => item.id === payroll.id)
 
@@ -125,6 +122,33 @@ const uploadFile = async ({ file, payroll }) => {
   setTimeout(() => {
     fetchPayroll(route.params.id)
   }, 10000)
+}
+
+const uploadInvoice = async (payroll, key) => {
+  await API.post('api', '/invoices/', {
+    body: {
+      key,
+      provider: 'SUPPLIER',
+      metadata: {
+        documentType: 'INVOICE',
+        payrollId: payroll.id
+      }
+    }
+  })
+}
+
+const uploadCreditNote = async (key, payroll, bill) => {
+  await API.post('api', '/invoices/credit-notes', {
+    body: {
+      key,
+      provider: 'SUPPLIER',
+      metadata: {
+        documentType: 'CREDIT_NOTE',
+        payrollId: payroll.id,
+        billId: bill.id
+      }
+    }
+  })
 }
 
 onMounted(() => {

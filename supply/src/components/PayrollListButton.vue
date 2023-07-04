@@ -3,16 +3,11 @@
     <v-col cols="auto" v-if="shouldShowAttachButton">
       <AppUploadButton
         size="small"
-        :text="showAttachButtonText"
-        color="blue"
+        :text="attachButtonText"
+        :color="attachButtonColor"
         @attached="uploadFile"
         :disabled="disabled"
       />
-    </v-col>
-    <v-col cols="auto" v-if="shouldShowViewButton">
-      <VBtn :href="payroll.bill.invoiceUrl" size="small" :disabled="disabled" target="_blank">
-        Ver
-      </VBtn>
     </v-col>
   </v-row>
 </template>
@@ -29,19 +24,40 @@ const payroll = computed(() => {
   return props.payroll
 })
 
+const loading = computed(() => {
+  return props.loading
+})
+
 const shouldShowAttachButton = computed(() => {
   return ['PENDIENTE', 'ADJUNTADA', 'ERROR', 'PROCESANDO'].includes(payroll.value.status)
 })
 
-const showAttachButtonText = computed(() => {
-  return 'Adjuntar'
-  // return payroll.value.status === 'PENDIENTE' && payroll.value.bill === null
-  //   ? 'Adjuntar'
-  //   : 'Re adjuntar'
+const attachButtonText = computed(() => {
+  if (payroll.value.status === 'ERROR') {
+    return 'Adjuntar NC'
+  }
+
+  if (payroll.value.status === 'ADJUNTADA') {
+    return 'Re adjuntar FC'
+  }
+
+  if (payroll.value.status === 'PROCESANDO') {
+    return 'Procesando'
+  }
+
+  return 'Adjuntar FC'
+})
+
+const attachButtonColor = computed(() => {
+  if (payroll.value.status === 'ERROR') {
+    return 'warning'
+  }
+
+  return 'blue'
 })
 
 const disabled = computed(() => {
-  return payroll.value.status === 'PROCESANDO' || props.loading === true
+  return ['PROCESANDO', 'PAGADA'].includes(payroll.value.status) || loading === true
 })
 
 const uploadFile = (file) => {
@@ -49,11 +65,11 @@ const uploadFile = (file) => {
     file,
     payroll: {
       ...payroll.value
-    }
+    },
+    bill: {
+      ...payroll.value.bill
+    },
+    isCreditNote: payroll.value.status === 'ERROR'
   })
 }
-
-const shouldShowViewButton = computed(() => {
-  return payroll.value.bill !== null
-})
 </script>
