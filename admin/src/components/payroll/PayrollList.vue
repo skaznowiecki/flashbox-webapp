@@ -55,6 +55,16 @@
               <v-col cols="auto">
                 <v-btn
                   size="small"
+                  @click="emitter('showInfo', item)"
+                  variant="outlined"
+                  v-if="item.information !== null || item.discount !== null"
+                >
+                  Info
+                </v-btn>
+              </v-col>
+              <v-col cols="auto">
+                <v-btn
+                  size="small"
                   @click="emitter('delete', item)"
                   variant="outlined"
                   :loading="loading"
@@ -82,7 +92,7 @@ import { useAuthorizer } from '@/composables/authorizer'
 
 const { canAction } = useAuthorizer()
 
-const emitter = defineEmits(['delete'])
+const emitter = defineEmits(['delete', 'showInfo'])
 
 const props = defineProps({
   payrolls: {

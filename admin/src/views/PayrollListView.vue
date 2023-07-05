@@ -3,7 +3,13 @@
     <VRow class="mt-1">
       <PayrollFilter :tags="tags" @change="filter" />
       <PayrollAction @openImport="openImport" @download="downloadExcel" :loading="loading" />
-      <PayrollList :payrolls="payrolls" :pages="pages" @delete="deletePayroll" :loading="loading" />
+      <PayrollList
+        :payrolls="payrolls"
+        :pages="pages"
+        @delete="deletePayroll"
+        @showInfo="showInfo"
+        :loading="loading"
+      />
       <Pagination :pages="pages" @changePage="changePage" />
 
       <VDialog v-model="importForm" persistent width="700">
@@ -12,6 +18,15 @@
           @download="downloadExample"
           @submit="submitImportFile"
           @close="closeImportForm"
+        />
+      </VDialog>
+
+      <VDialog v-model="showInfoForm" persistent width="700">
+        <PayrollShowInfo
+          :loading="loading"
+          :information="information"
+          :discount="discount"
+          @close="closeShowInfo"
         />
       </VDialog>
     </VRow>
@@ -29,6 +44,7 @@ import PayrollAction from '@/components/payroll/PayrollAction.vue'
 import PayrollImportForm from '@/components/payroll/PayrollImportForm.vue'
 
 import { ref, onMounted } from 'vue'
+import PayrollShowInfo from '@/components/payroll/PayrollShowInfo.vue'
 
 let payrolls = ref([])
 let pages = ref(1)
@@ -77,6 +93,22 @@ const downloadExcel = async () => {
   loading.value = false
 
   window.location.href = url
+}
+
+// show info
+
+let showInfoForm = ref(false)
+let information = ref(null)
+let discount = ref(null)
+
+const showInfo = (payroll) => {
+  showInfoForm.value = true
+  information.value = payroll.information
+  discount.value = payroll.discount
+}
+
+const closeShowInfo = () => {
+  showInfoForm.value = false
 }
 
 // import form

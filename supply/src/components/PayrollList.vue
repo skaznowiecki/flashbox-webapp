@@ -7,7 +7,8 @@
             <th class="text-center" width="20%">Fecha</th>
             <th class="text-center" width="10%">Monto Neto</th>
             <th class="text-center" width="20%">Mensaje</th>
-            <th class="text-center" width="30%">Accion</th>
+            <th class="text-center" width="10%">Detalle</th>
+            <th class="text-center" width="20%">Accion</th>
             <th class="text-center" width="10%">Ver</th>
           </tr>
         </thead>
@@ -16,6 +17,17 @@
             <td><PayrollListDate :payroll="item" /></td>
             <td>${{ item.amount }}</td>
             <td>{{ item.message ?? '' }}</td>
+            <td class="text-center">
+              <v-btn
+                size="small"
+                @click="emitter('showInfo', item)"
+                variant="outlined"
+                v-if="item.information !== null || item.discount !== null"
+              >
+                Info
+              </v-btn>
+              <span v-else>---</span>
+            </td>
             <td>
               <PayrollListButton :payroll="item" @uploadFile="uploadFile" :loading="loading" />
             </td>
@@ -42,7 +54,7 @@ import PayrollListDate from '@/components/PayrollListDate.vue'
 import PayrollListButton from '@/components/PayrollListButton.vue'
 
 const props = defineProps(['payrolls', 'loading'])
-const emitter = defineEmits(['uploadFile'])
+const emitter = defineEmits(['uploadFile', 'showInfo'])
 
 const payrolls = computed(() => {
   return props.payrolls.sort((a, b) => {

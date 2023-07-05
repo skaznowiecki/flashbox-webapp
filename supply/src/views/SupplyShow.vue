@@ -5,10 +5,24 @@
       <v-divider></v-divider>
       <v-card-text>
         <PayrollFilter @update:toggle="updateToggle" />
-        <PayrollList :payrolls="payrollToDisplay" @uploadFile="uploadFile" :loading="loading" />
+        <PayrollList
+          :payrolls="payrollToDisplay"
+          @uploadFile="uploadFile"
+          @showInfo="showInfo"
+          :loading="loading"
+        />
       </v-card-text>
     </v-card>
     <PayrollNotFound v-else />
+
+    <VDialog v-model="showInfoForm" persistent width="700">
+      <PayrollShowInfo
+        :loading="loading"
+        :information="information"
+        :discount="discount"
+        @close="closeShowInfo"
+      />
+    </VDialog>
   </div>
 </template>
 
@@ -19,6 +33,7 @@ import { API } from 'aws-amplify'
 import PayrollList from '@/components/PayrollList.vue'
 import PayrollFilter from '@/components/PayrollFilter.vue'
 import PayrollNotFound from '@/components/PayrollNotFound.vue'
+import PayrollShowInfo from '@/components/PayrollShowInfo.vue'
 
 const NUMBER_OF_MONTHS = 2
 const route = useRoute()
@@ -149,6 +164,22 @@ const uploadCreditNote = async (key, payroll, bill) => {
       }
     }
   })
+}
+
+// show info
+
+let showInfoForm = ref(false)
+let information = ref(null)
+let discount = ref(null)
+
+const showInfo = (payroll) => {
+  showInfoForm.value = true
+  information.value = payroll.information
+  discount.value = payroll.discount
+}
+
+const closeShowInfo = () => {
+  showInfoForm.value = false
 }
 
 onMounted(() => {
