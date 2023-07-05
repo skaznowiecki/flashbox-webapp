@@ -21,25 +21,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 const props = defineProps({
-  token: {
-    type: String | null,
+  nextToken: {
+    type: String,
     required: false
   }
 })
+
+let currentToken = null
 let prevToken = ref([])
-let nextToken = ref(props.token || null)
+let nextToken = computed(() => props.nextToken || null)
 
 const emitter = defineEmits(['changePage'])
 
 const clickPrevToken = () => {
-  nextToken.value = prevToken.value.pop()
-  emitter('changePage', { token: prevToken.value })
+  const token = prevToken.value.pop()
+  currentToken = token
+
+  emitter('changePage', { token })
 }
 
 const clickNextToken = () => {
-  prevToken.value.push(nextToken.value)
+  prevToken.value.push(currentToken)
+
+  currentToken = nextToken.value
+
   emitter('changePage', { token: nextToken.value })
 }
 </script>

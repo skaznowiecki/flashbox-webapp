@@ -62,7 +62,7 @@ const check = computed(() => {
   }
 
   const payrollAmount = Number(props.payroll.amount)
-  const payrollWithTax = payrollAmount * 1.21
+  const payrollWithTax = Number((payrollAmount * 1.21).toFixed(2))
 
   const billAmount = Number(props.bill.total)
 

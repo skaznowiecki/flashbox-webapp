@@ -3,7 +3,7 @@
     <VRow class="mt-1">
       <UserAction @createUser="openCreateUserForm" />
       <UserList :users="users" @changeRole="changeRole" @deleteUser="deleteUser" />
-      <DynamoPagination :token="nextToken" @changePage="changePage" v-if="nextToken !== null" />
+      <DynamoPagination :nextToken="nextToken" @changePage="changePage" />
       <VDialog v-model="userForm" persistent width="1024">
         <UserForm
           :loading="userCreateLoading"
@@ -63,8 +63,7 @@ const fetchUsers = async (token) => {
   nextToken.value = response.nextToken
 }
 
-const changePage = (token) => {
-  console.log(token)
+const changePage = ({ token }) => {
   fetchUsers(token)
 }
 
