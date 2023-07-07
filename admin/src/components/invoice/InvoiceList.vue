@@ -3,8 +3,8 @@
     <VTable class="elevation-1 rounded-lg">
       <thead class="text-uppercase text-subtitle-2">
         <tr>
-          <th class="text-center" style="width: 20%">Razon social</th>
-          <th class="text-center">Tags</th>
+          <th class="text-center" style="width: 15%">Razon social</th>
+          <th class="text-center" style="width: 15%">Tags</th>
           <th class="text-center">CUIL/CUIT</th>
           <th class="text-center">Empresa</th>
 
@@ -16,12 +16,16 @@
           <th class="text-center">Recepcion</th>
           <th class="text-center">Fecha pago</th>
 
-          <th class="text-center">Link</th>
+          <th class="text-center">Links</th>
           <th class="text-center">Accion</th>
         </tr>
       </thead>
       <tbody class="text-body-2">
-        <tr v-for="item in invoices" :key="item.pk">
+        <tr
+          v-for="item in invoices"
+          :key="item.pk"
+          :class="{ 'credit-note-item': hasCreditNote(item) }"
+        >
           <td class="text-center">{{ item.supplier.name || 'SIN NOMBRE' }}</td>
           <td class="text-center">
             <SupplierTag :tags="item.tags" />
@@ -46,7 +50,23 @@
           </td>
 
           <td class="text-center">
-            <VBtn :href="item.invoiceUrl" target="_blank" variant="outlined" size="small">PDF</VBtn>
+            <v-row align="center" justify="center">
+              <v-col cols="auto">
+                <VBtn :href="item.invoiceUrl" target="_blank" variant="outlined" size="small"
+                  >FC</VBtn
+                >
+              </v-col>
+              <v-col cols="auto">
+                <VBtn
+                  :href="hasCreditNote(item) ? item.creditNote.url : null"
+                  target="_blank"
+                  variant="outlined"
+                  size="small"
+                  :disabled="!hasCreditNote(item)"
+                  >NC</VBtn
+                >
+              </v-col>
+            </v-row>
           </td>
 
           <td class="text-center">
@@ -65,6 +85,12 @@
   </VCol>
 </template>
 
+<style scoped>
+.credit-note-item {
+  background-color: #d6eeee;
+}
+</style>
+
 <script setup>
 import { computed } from 'vue'
 
@@ -76,6 +102,10 @@ import SupplierTag from '@/components/shared/SupplierTag.vue'
 import Amount from '@/components/shared/Amount.vue'
 
 const emitter = defineEmits(['delete'])
+
+const hasCreditNote = (item) => {
+  return item.creditNote !== null
+}
 
 const canDeleteInvoice = (item) => {
   return canAction('delete-invoice') && item.payroll === null
