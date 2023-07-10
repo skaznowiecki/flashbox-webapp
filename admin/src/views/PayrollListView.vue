@@ -74,6 +74,7 @@ const filter = async (params) => {
   filters = {
     ...params
   }
+  currentPage = 1
   fetchPayrolls()
 }
 

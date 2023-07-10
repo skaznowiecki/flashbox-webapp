@@ -46,6 +46,7 @@ const fetchInvoices = async (filters) => {
 
 const filter = async (params) => {
   listFilters = params
+  currentPage = 1
   fetchInvoices(params)
 }
 

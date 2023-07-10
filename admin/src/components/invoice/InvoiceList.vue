@@ -3,6 +3,7 @@
     <VTable class="elevation-1 rounded-lg">
       <thead class="text-uppercase text-subtitle-2">
         <tr>
+          <th class="text-center">ID</th>
           <th class="text-center" style="width: 15%">Razon social</th>
           <th class="text-center" style="width: 15%">Tags</th>
           <th class="text-center">CUIL/CUIT</th>
@@ -26,6 +27,7 @@
           :key="item.pk"
           :class="{ 'credit-note-item': hasCreditNote(item) }"
         >
+          <td class="text-center">{{ item.id }}</td>
           <td class="text-center">{{ item.supplier.name || 'SIN NOMBRE' }}</td>
           <td class="text-center">
             <SupplierTag :tags="item.tags" />
