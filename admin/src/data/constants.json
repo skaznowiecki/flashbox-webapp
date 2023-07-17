@@ -107,27 +107,33 @@
     },
     {
       "value": "PENDIENTE",
-      "key": "Pendiente"
+      "key": "Pendiente",
+      "color": "9E9D24"
     },
     {
       "value": "PROCESANDO",
-      "key": "Procesando"
+      "key": "Procesando",
+      "color": "0288D1"
     },
     {
       "value": "ADJUNTADA",
-      "key": "Adjuntada"
+      "key": "Adjuntada",
+      "color": "388E3C"
     },
     {
       "value": "PAGADO",
-      "key": "Pagado"
+      "key": "Pagado",
+      "color": "D84315"
     },
     {
       "value": "NO_PAGADO",
-      "key": "No pagado"
+      "key": "No pagado",
+      "color": "616161"
     },
     {
       "value": "ERROR",
-      "key": "Error"
+      "key": "Error",
+      "color": "DD2C00"
     }
   ],
   "POSITIVE_PERCENTAGE_THRESHOLD": 0.01,

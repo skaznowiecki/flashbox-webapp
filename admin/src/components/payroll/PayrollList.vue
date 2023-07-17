@@ -30,9 +30,14 @@
           <td class="text-center">{{ item.year }}</td>
           <td class="text-center">{{ item.detail }}</td>
           <td class="text-center">
-            <v-btn density="compact" block :disabled="true" :title="item.message">{{
-              item.status
-            }}</v-btn>
+            <v-btn
+              class="text-white"
+              size="small"
+              :color="getColor(item.status)"
+              :disabled="true"
+              flat
+              >{{ item.status }}</v-btn
+            >
           </td>
           <td class="text-center">
             <VBtn
@@ -85,7 +90,7 @@
 import { computed } from 'vue'
 import SupplierTag from '@/components/shared/SupplierTag.vue'
 
-import { months } from '@/data/constants.json'
+import { months, payrollStatus } from '@/data/constants.json'
 import Amount from '@/components/shared/Amount.vue'
 
 import { useAuthorizer } from '@/composables/authorizer'
@@ -93,6 +98,11 @@ import { useAuthorizer } from '@/composables/authorizer'
 const { canAction } = useAuthorizer()
 
 const emitter = defineEmits(['delete', 'showInfo'])
+
+const getColor = (status) => {
+  const { color } = payrollStatus.find((item) => item.value === status)
+  return `#${color}`
+}
 
 const props = defineProps({
   payrolls: {

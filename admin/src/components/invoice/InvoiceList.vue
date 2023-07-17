@@ -72,14 +72,27 @@
           </td>
 
           <td class="text-center">
-            <VBtn
-              variant="outlined"
-              size="small"
-              :disabled="!canDeleteInvoice(item)"
-              :loading="loading"
-              @click="emitter('delete', item)"
-              >Eliminar</VBtn
-            >
+            <v-row align="center" justify="center">
+              <v-col cols="auto" v-if="item.description">
+                <VBtn
+                  variant="outlined"
+                  size="small"
+                  :loading="loading"
+                  @click="emitter('show', item)"
+                  >Ver</VBtn
+                >
+              </v-col>
+              <v-col cols="auto">
+                <VBtn
+                  variant="outlined"
+                  size="small"
+                  :disabled="!canDeleteInvoice(item)"
+                  :loading="loading"
+                  @click="emitter('delete', item)"
+                  >Eliminar</VBtn
+                >
+              </v-col>
+            </v-row>
           </td>
         </tr>
       </tbody>
@@ -103,7 +116,7 @@ const { canAction } = useAuthorizer()
 import SupplierTag from '@/components/shared/SupplierTag.vue'
 import Amount from '@/components/shared/Amount.vue'
 
-const emitter = defineEmits(['delete'])
+const emitter = defineEmits(['delete', 'show'])
 
 const hasCreditNote = (item) => {
   return item.creditNote !== null

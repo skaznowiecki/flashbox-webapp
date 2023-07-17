@@ -3,8 +3,18 @@
     <VRow class="mt-1">
       <InvoiceFilter @change="filter" :tags="tags" />
       <InvoiceAction @download="downloadExcel" :loading="downloadBtnLoading" />
-      <InvoiceList :invoices="invoices" :pages="pages" @delete="deleteInvoice" :loading="loading" />
+      <InvoiceList
+        :invoices="invoices"
+        :pages="pages"
+        @delete="deleteInvoice"
+        @show="showDescription"
+        :loading="loading"
+      />
       <Pagination :pages="pages" @changePage="changePage" />
+
+      <VDialog v-model="showDescriptionForm" persistent width="700">
+        <InvoiceShowDescription :description="description" @close="closeShowDescription" />
+      </VDialog>
     </VRow>
   </AppModernLayout>
 </template>
@@ -17,6 +27,7 @@ import InvoiceAction from '@/components/invoice/InvoiceAction.vue'
 import { API } from 'aws-amplify'
 import { onMounted, ref } from 'vue'
 import Pagination from '../components/shared/Pagination.vue'
+import InvoiceShowDescription from '../components/invoice/InvoiceShowDescription.vue'
 
 let invoices = ref([])
 let pages = ref(1)
@@ -77,6 +88,17 @@ const deleteInvoice = async ({ id }) => {
   fetchInvoices(listFilters)
 
   loading.value = false
+}
+
+let showDescriptionForm = ref(false)
+let description = ref('')
+const closeShowDescription = () => {
+  showDescriptionForm.value = false
+}
+
+const showDescription = (item) => {
+  description.value = item.description
+  showDescriptionForm.value = true
 }
 
 onMounted(() => {
