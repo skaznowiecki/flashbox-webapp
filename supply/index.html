@@ -13,6 +13,35 @@
         var global = window
       }
     </script>
+
     <script type="module" src="/src/main.js"></script>
+    <!-- <script>
+      ;(function (n, i, v, r, s, c, x, z) {
+        x = window.AwsRumClient = { q: [], n: n, i: i, v: v, r: r, c: c }
+        window[n] = function (c, p) {
+          x.q.push({ c: c, p: p })
+        }
+        z = document.createElement('script')
+        z.async = true
+        z.src = s
+        document.head.insertBefore(z, document.head.getElementsByTagName('script')[0])
+      })(
+        'cwr',
+        '[appMonitorId]', // Replace this with appMonitorId
+        '1.0.0',
+        '[awsRegion]', // Replace this with awsRegion
+        'https://client.rum.us-east-1.amazonaws.com/1.2.1/cwr.js',
+        {
+          sessionSampleRate: 1,
+          guestRoleArn:
+            'arn:aws:iam::516111175321:role/RUM-Monitor-us-east-1-516111175321-0863689549861-Unauth',
+          identityPoolId: 'us-east-1:b2bee661-e5f0-474c-9dce-8dca4974d8a2',
+          endpoint: 'https://dataplane.rum.us-east-1.amazonaws.com',
+          telemetries: ['performance', 'errors', 'http'],
+          allowCookies: true,
+          enableXRay: false
+        }
+      )
+    </script> -->
   </body>
 </html>
