@@ -46,7 +46,7 @@ const fetchInvoices = async (filters) => {
   const params = {
     queryStringParameters: {
       ...filters,
-      mailbox: 0,
+      mailbox: 1,
       page: currentPage
     }
   }
@@ -73,7 +73,7 @@ const downloadExcel = async () => {
   downloadBtnLoading.value = true
   const params = {
     queryStringParameters: {
-      mailbox: 0,
+      mailbox: 1,
       ...listFilters
     }
   }

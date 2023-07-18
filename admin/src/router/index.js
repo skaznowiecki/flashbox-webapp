@@ -12,6 +12,7 @@ import InvoiceListView from '@/views/InvoiceListView.vue'
 import CreditNoteListView from '@/views/CreditNoteListView.vue'
 
 import SupplierEditView from '@/views/SupplierEditView.vue'
+import MailboxListView from '../views/MailboxListView.vue'
 
 import { useAuthStore } from '@/stores/AuthStore'
 
@@ -36,6 +37,16 @@ const router = createRouter({
         requiresAuth: true,
         title: 'Facturas',
         section: 'invoice'
+      }
+    },
+    {
+      path: '/mailbox',
+      name: 'MailboxList',
+      component: MailboxListView,
+      meta: {
+        requiresAuth: true,
+        title: 'Buzon',
+        section: 'mailbox'
       }
     },
     {

@@ -41,6 +41,13 @@ const allSections = [
     active: true
   },
   {
+    title: 'Buzon',
+    value: 'MailboxList',
+    name: 'mailbox',
+    role: ['superadmin', 'admin', 'user'],
+    active: true
+  },
+  {
     title: 'Notas de credito',
     value: 'CreditNoteList',
     name: 'credit-note',

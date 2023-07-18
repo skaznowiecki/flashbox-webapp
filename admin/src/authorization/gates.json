@@ -4,9 +4,9 @@
     "delete-payroll": ["admin", "superadmin"],
     "import-payroll": ["admin", "superadmin"],
     "import-supplier": ["admin", "superadmin"],
-    "edit-supplier": ["admin", "superadmin"],
-    "edit-supplier-tags": ["admin", "superadmin"],
-    "list-tags": ["admin", "superadmin"],
+    "edit-supplier": ["admin", "superadmin", "user"],
+    "edit-supplier-tags": ["admin", "superadmin", "user"],
+    "list-tags": ["admin", "superadmin", "user"],
     "create-tag": ["admin", "superadmin"],
     "assign-credit-note": ["admin", "superadmin"]
   }
