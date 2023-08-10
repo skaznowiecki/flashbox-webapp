@@ -20,6 +20,7 @@
           block
           @click="emitter('checkSupplier', id)"
           :disabled="!isActive"
+          :loading="loading"
         >
           Consultar
         </v-btn>
@@ -33,9 +34,13 @@ import { ref, computed } from 'vue'
 
 let id = ref(null)
 
+const props = defineProps(['loading'])
+
+let loading = computed(() => props.loading)
+
 const emitter = defineEmits(['checkSupplier'])
 
 const isActive = computed(() => {
-  return id.value !== null && id.value.length > 5
+  return id.value !== null && id.value.length > 5 && !loading.value
 })
 </script>
