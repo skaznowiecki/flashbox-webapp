@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-center justify-center mt-10">
     <v-card class="mx-auto" width="800" v-if="exists" :loading="loading">
-      <v-card-title class="text-center text-h4"> Liquidación </v-card-title>
+      <v-card-title class="text-center text-h4"> Recepción de facturas </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
         <PayrollFilter @update:toggle="updateToggle" />
@@ -34,6 +34,7 @@ import PayrollList from '@/components/PayrollList.vue'
 import PayrollFilter from '@/components/PayrollFilter.vue'
 import PayrollNotFound from '@/components/PayrollNotFound.vue'
 import PayrollShowInfo from '@/components/PayrollShowInfo.vue'
+import { getCurrentAndPreviousMonths } from '@/utils/payroll'
 
 const NUMBER_OF_MONTHS = 2
 const route = useRoute()
@@ -86,17 +87,6 @@ const historyPayroll = computed(() => {
     })
   })
 })
-
-const getCurrentAndPreviousMonths = (numberOfMonths) => {
-  const today = new Date()
-  const previousMonths = []
-
-  for (let i = 0; i < numberOfMonths; i++) {
-    const previousMonth = new Date(today.getFullYear(), today.getMonth() - i, 1)
-    previousMonths.push([previousMonth.getFullYear(), previousMonth.getMonth() + 1])
-  }
-  return previousMonths
-}
 
 const uploadFile = async ({ file, payroll, bill, isCreditNote }) => {
   if (!file) return

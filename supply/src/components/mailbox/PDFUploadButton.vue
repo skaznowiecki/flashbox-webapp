@@ -40,10 +40,10 @@ const isDisabled = computed(() => {
 const text = computed(() => {
   if (status.value === 'empty') {
     return 'Adjuntar PDF'
-  } else if (['pending', 'processing'].includes(status.value)) {
-    return 'Procesando...'
   } else if (status.value === 'completed') {
     return 'PDF adjuntado'
+  } else {
+    return 'Procesando...'
   }
 })
 

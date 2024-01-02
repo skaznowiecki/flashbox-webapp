@@ -6,8 +6,6 @@
 <script setup>
 import { computed } from 'vue'
 
-const emitter = defineEmits(['attached'])
-
 const props = defineProps({
   status: {
     type: String,
@@ -30,6 +28,8 @@ const text = computed(() => {
     return `
     Puede demorar entre 40 y 60 segundos en procesarse.
     No cierre esta ventana, porque el proceso se cancelará.`
+  } else {
+    return 'El archivo se ha procesado correctamente'
   }
 })
 </script>

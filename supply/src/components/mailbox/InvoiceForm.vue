@@ -1,56 +1,69 @@
 <template>
-  <v-form fast-fail ref="invoiceForm">
-    <VRow>
-      <VCol cols="12">
-        <v-text-field
-          type="number"
-          v-model="invoice.businessId"
-          label="CUIT / CUIL"
-          variant="outlined"
-          :rules="bussinesIdValidation"
-        ></v-text-field>
-      </VCol>
+  <v-col cols="auto">
+    <v-form fast-fail ref="invoiceForm">
+      <VRow>
+        <VCol cols="12">
+          <v-text-field
+            type="number"
+            v-model="invoice.businessId"
+            label="CUIT / CUIL EMISOR"
+            variant="outlined"
+            :rules="bussinesIdValidation"
+          ></v-text-field>
+        </VCol>
 
-      <VCol cols="12">
-        <v-text-field
-          type="number"
-          v-model="invoice.receiverBussinesId"
-          label="CUIT / CUIL - Empresa"
-          variant="outlined"
-          :rules="receiverBussinesIdValidation"
-        ></v-text-field>
-      </VCol>
+        <VCol cols="12">
+          <v-text-field
+            type="number"
+            v-model="invoice.receiverBussinesId"
+            label="CUIT / CUIL RECEPTOR"
+            variant="outlined"
+            :rules="receiverBussinesIdValidation"
+          ></v-text-field>
+        </VCol>
 
-      <VCol cols="12">
-        <v-text-field
-          type="number"
-          v-model="invoice.total"
-          label="Monto total"
-          variant="outlined"
-          :rules="amountValidation"
-        ></v-text-field>
-      </VCol>
-      <VCol cols="12">
-        <v-textarea
-          v-model="invoice.description"
-          label="Descripción de la factura"
-          :rules="descriptionValidation"
-        ></v-textarea>
-      </VCol>
-      <VCol cols="12">
-        <v-btn
-          variant="flat"
-          color="blue"
-          block
-          :disabled="!submitEnable"
-          :loading="loading"
-          @click="submit"
-        >
-          Enviar
-        </v-btn>
-      </VCol>
-    </VRow>
-  </v-form>
+        <VCol cols="12">
+          <v-text-field
+            type="number"
+            v-model="invoice.total"
+            label="Monto total"
+            variant="outlined"
+            :rules="amountValidation"
+          ></v-text-field>
+        </VCol>
+
+        <VCol cols="12">
+          <VSelect
+            :items="isCreditItems"
+            v-model="invoice.isCreditNote"
+            label="Es nota de credito ?"
+            variant="outlined"
+            :rules="isCreditValidation"
+          />
+        </VCol>
+
+        <VCol cols="12">
+          <v-textarea
+            v-model="invoice.description"
+            label="Descripción de la factura"
+            :rules="descriptionValidation"
+          ></v-textarea>
+        </VCol>
+        <VCol cols="12">
+          <v-btn
+            variant="flat"
+            color="blue"
+            block
+            :disabled="!submitEnable"
+            :loading="loading"
+            @click="submit"
+          >
+            Enviar
+          </v-btn>
+        </VCol>
+      </VRow>
+    </v-form>
+  </v-col>
 </template>
 
 <script setup>
@@ -70,6 +83,21 @@ const props = defineProps({
 const loading = computed(() => props.loading)
 
 const emitter = defineEmits(['submit'])
+
+const isCreditItems = [
+  { title: 'Si', value: true },
+  { title: 'No', value: false }
+]
+
+const isCreditValidation = [
+  (value) => {
+    if (value === '') {
+      return 'Es requerido.'
+    }
+
+    return true
+  }
+]
 
 const amountValidation = [
   (value) => {

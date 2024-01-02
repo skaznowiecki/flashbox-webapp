@@ -1,7 +1,7 @@
 <template>
   <v-sheet width="400" class="mx-auto">
     <v-card class="mx-auto" max-width="344" variant="outlined">
-      <v-card-title class="align-centen py-5"> Consulte su proxima liquidación </v-card-title>
+      <v-card-title class="align-centen py-5"> Página de inicio </v-card-title>
 
       <v-card-text>
         <v-text-field

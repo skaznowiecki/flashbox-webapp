@@ -120,6 +120,13 @@ const payrolls = computed(() => {
 })
 
 const getMonth = (month) => {
-  return months.find((item) => item.value === month).key
+  const monthObject =  months.find((item) => item.value === month)
+
+  if(!monthObject){
+    console.log(month)
+    return ''
+  }
+
+  return monthObject.key;
 }
 </script>

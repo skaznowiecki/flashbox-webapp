@@ -1,12 +1,10 @@
 <template>
   <div class="d-flex align-center justify-center" style="height: 100vh">
-    <SupplierForm @checkSupplier="checkSupplier" :loading="loading"/>
+    <SupplierForm @checkSupplier="checkSupplier" :loading="loading" />
   </div>
 </template>
 <script setup>
-
 import { API } from 'aws-amplify'
-
 
 import SupplierForm from '@/components/SupplierForm.vue'
 import { useRouter } from 'vue-router'
@@ -19,21 +17,19 @@ const router = useRouter()
 const checkSupplier = async (id) => {
   loading.value = true
   try {
-    const { tags } = await API.get('api', `/suppliers/${id}/tags`);
+    const { tags } = await API.get('api', `/suppliers/${id}/tags`)
 
-    const tag = tags.find(tag => tag.name === 'FACTURA DE DISEÑO');
+    const tag = tags.find((tag) => tag.name === 'FACTURA DE DISEÑO')
 
-    if(tag){
-      router.push({ name: 'Mailbox' })
+    if (tag) {
+      router.push({ name: 'Mailbox', params: { id } })
     } else {
       router.push({ name: 'SupplyShow', params: { id } })
     }
-
   } catch (error) {
     router.push({ name: 'SupplyShow', params: { id } })
   } finally {
     loading.value = false
   }
-  
 }
 </script>

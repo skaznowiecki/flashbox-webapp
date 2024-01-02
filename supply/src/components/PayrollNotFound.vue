@@ -1,6 +1,6 @@
 <template>
   <v-card width="800">
-    <v-card-title class="text-center text-h4"> Liquidación </v-card-title>
+    <v-card-title class="text-center text-h4"> Recepción de facturas </v-card-title>
     <v-divider></v-divider>
     <VRow align="center" justify="center">
       <VCol cols="auto">

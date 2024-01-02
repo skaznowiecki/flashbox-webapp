@@ -12,7 +12,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/buzon',
+      path: '/:id/buzon',
       name: 'Mailbox',
       component: MailboxView
     },
