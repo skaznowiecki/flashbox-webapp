@@ -38,7 +38,7 @@ const status = ref('empty')
 const props = defineProps({
   supplierId: {
     type: String,
-    required: true
+    required: false
   }
 })
 
@@ -109,11 +109,15 @@ watch(
 )
 
 onMounted(async () => {
-  const response = await useListSupplyPayrolls(props.supplierId)
+  if (props.supplierId !== undefined) {
+    const response = await useListSupplyPayrolls(props.supplierId)
 
-  payrolls.value = getCurrentAndPreviousPayrolls(response, 3).filter(
-    (item) => item.status !== 'PAGADO'
-  )
+    payrolls.value = getCurrentAndPreviousPayrolls(response, 3).filter(
+      (item) => item.status !== 'PAGADO'
+    )
+  } else {
+    payrolls.value = []
+  }
 
   if (payrolls.value.length > 0) {
     payrollStatus.value = 'payroll_required'

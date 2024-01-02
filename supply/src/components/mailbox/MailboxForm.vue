@@ -56,7 +56,7 @@ let isDocumentUploaded = ref(false)
 defineProps({
   supplierId: {
     type: String,
-    required: true
+    required: false
   }
 })
 

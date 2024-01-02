@@ -17,6 +17,11 @@ const router = createRouter({
       component: MailboxView
     },
     {
+      path: '/buzon',
+      name: 'EmptyMailbox',
+      component: MailboxView
+    },
+    {
       path: '/:id',
       name: 'SupplyShow',
       component: SupplyShow
