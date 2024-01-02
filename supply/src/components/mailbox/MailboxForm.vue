@@ -41,7 +41,8 @@ const invoice = reactive({
   receiverBussinesConditionAgainstVAT: null,
   receiverBussinesId: null,
   subtotal: null,
-  total: null
+  total: null,
+  type: null
 })
 
 let success = ref(false)
