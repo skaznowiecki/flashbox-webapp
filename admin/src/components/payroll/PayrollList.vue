@@ -14,6 +14,7 @@
           <th class="text-center" style="width: 10%">Link</th>
           <th class="text-center">Monto Liquidado</th>
           <th class="text-center">Monto Facturado</th>
+          <th class="text-center">Periodo</th>
 
           <th class="text-center">Acciones</th>
         </tr>
@@ -53,6 +54,9 @@
           <td class="text-center">${{ item.amount }}</td>
           <td class="text-center">
             <Amount :bill="item.bill" :payroll="item" type="bill" />
+          </td>
+          <td class="text-center">
+            +{{ item.paymentPeriod || item.supplier.paymentPeriod || '-' }}
           </td>
 
           <td class="text-center">
@@ -120,13 +124,13 @@ const payrolls = computed(() => {
 })
 
 const getMonth = (month) => {
-  const monthObject =  months.find((item) => item.value === month)
+  const monthObject = months.find((item) => item.value === month)
 
-  if(!monthObject){
+  if (!monthObject) {
     console.log(month)
     return ''
   }
 
-  return monthObject.key;
+  return monthObject.key
 }
 </script>

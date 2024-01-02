@@ -10,6 +10,7 @@
           <th class="text-center">Empresa</th>
 
           <th class="text-center">Total</th>
+          <th class="text-center">Tipo</th>
 
           <th class="text-center">Liquidacion</th>
 
@@ -36,6 +37,7 @@
           <td class="text-center">{{ item.business.name }}</td>
 
           <td class="text-center">${{ Number(item.total) }}</td>
+          <td class="text-center">{{ item.type || '-' }}</td>
 
           <td class="text-center">
             <Amount :bill="item" :payroll="item.payroll" type="payroll" />
