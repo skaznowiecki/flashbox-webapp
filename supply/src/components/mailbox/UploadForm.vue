@@ -89,7 +89,8 @@ const payrollSelectItems = computed(() => {
   return payrolls.value.map((item) => {
     return {
       title: `${getMonthName(item.month)}/${item.year} ($${item.amount})`,
-      value: item.id
+      value: item.id,
+      props: { subtitle: item.message }
     }
   })
 })

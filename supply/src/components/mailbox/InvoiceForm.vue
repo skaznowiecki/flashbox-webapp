@@ -141,8 +141,8 @@ const descriptionValidation = [
       return 'La descripción es requerida.'
     }
 
-    if (value.length < 10) {
-      return 'La descripción debe tener 10 caracteres como minimo'
+    if (value.length < 4) {
+      return 'La descripción debe tener 4 caracteres como minimo'
     }
 
     return true
@@ -162,7 +162,7 @@ const submitEnable = computed(() => {
     return false
   }
 
-  if (!invoice.description || invoice.description.length < 10) {
+  if (!invoice.description || invoice.description.length < 4) {
     return false
   }
 
