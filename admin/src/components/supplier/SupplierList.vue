@@ -8,7 +8,7 @@
           <th class="text-center">Condicion</th>
           <th class="text-center">Periodo pago</th>
 
-          <th class="text-center">Tags</th>
+          <th class="text-center" style="width: 15%">Tags</th>
           <th class="text-center">Acciones</th>
         </tr>
       </thead>

@@ -1,17 +1,20 @@
 <template>
   <div>
-    <v-row justify="center" align="center" v-if="tags.length > 0">
-      <v-col cols="auto" v-for="{ color, name } in tags">
-        <v-btn class="text-white" size="small" :color="getColor(color)" :disabled="true" flat>{{
-          name
-        }}</v-btn>
-      </v-col>
-    </v-row>
-    <v-row justify="center" align="center" v-else>
-      <v-col cols="auto">
-        <v-btn :disabled="true" size="small">Sin Tags</v-btn>
-      </v-col>
-    </v-row>
+    <div v-if="tags.length > 0">
+      <v-chip
+        class="ma-2"
+        label
+        v-for="{ color, name } in tags"
+        :key="name"
+        :color="getColor(color)"
+        size="small"
+      >
+        {{ name }}
+      </v-chip>
+    </div>
+    <div v-else>
+      <v-chip class="ma-2" label size="small"> Sin Tags </v-chip>
+    </div>
   </div>
 </template>
 
