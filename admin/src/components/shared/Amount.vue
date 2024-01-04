@@ -61,6 +61,14 @@ const check = computed(() => {
     return [false, 'El proveedor de la factura no coincide con el de la liquidacion']
   }
 
+  if (props.bill.type !== null && ['A', 'C', 'M'].includes(props.bill.type)) {
+    return payrollInvoiceCheckWithType(
+      Number(props.payroll.amount),
+      Number(props.bill.total),
+      props.bill.type
+    )
+  }
+
   const payrollAmount = Number(props.payroll.amount)
   const payrollWithTax = Number((payrollAmount * 1.21).toFixed(2))
 
@@ -101,5 +109,27 @@ const checkThreshold = (value, expectedValue) => {
       return false
     }
   }
+}
+
+const payrollInvoiceCheckWithType = (payrollAmount, total, type) => {
+  const payrollAmountWithTax = calculateAmountWithTax(payrollAmount, type)
+
+  if (total === payrollAmountWithTax) {
+    return [true, null]
+  }
+
+  if (checkThreshold(total, payrollAmountWithTax)) {
+    return [true, null]
+  }
+
+  return [false, 'El monto de la factura es diferente al de la liquidacion']
+}
+
+const calculateAmountWithTax = (amount, type) => {
+  if (type === 'A' || type === 'M') {
+    return amount * 1.21
+  }
+
+  return amount
 }
 </script>
