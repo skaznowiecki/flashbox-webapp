@@ -42,6 +42,13 @@ let tags = ref([])
 
 const fetchTags = async () => {
   tags.value = await API.get('api', '/suppliers/tags')
+
+  tags.value.push({
+    id: -1,
+    name: 'SIN TAG',
+    color: '3F51B5',
+    count: 0
+  })
 }
 
 const fetchCreditNotes = async (filters) => {

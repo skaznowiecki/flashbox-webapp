@@ -3,14 +3,9 @@
     <VTable class="elevation-1 rounded-lg">
       <thead class="text-uppercase text-subtitle-2">
         <tr>
-<<<<<<< HEAD
           <th class="text-center">ID</th>
-          <th class="text-center" style="width: 15%">Razon social</th>
-          <th class="text-center" style="width: 15%">Tags</th>
-=======
           <th class="text-center" style="width: 10%">Razon social</th>
-          <th class="text-center">Tags</th>
->>>>>>> 1dd92ca (improvements)
+          <th class="text-center" style="width: 10%">Tags</th>
           <th class="text-center">CUIL/CUIT</th>
           <th class="text-center">Empresa</th>
 
@@ -30,18 +25,14 @@
       </thead>
       <tbody class="text-body-2">
         <tr
-<<<<<<< HEAD
-          v-for="item in invoices"
-          :key="item.pk"
-          :class="{ 'credit-note-item': hasCreditNote(item) }"
-        >
-          <td class="text-center">{{ item.id }}</td>
-=======
           v-for="(item, index) in invoices"
           :key="item.pk"
-          :class="{ 'bg-grey-lighten-2': index % 2 !== 0 }"
+          :class="[
+            { 'credit-note-item': hasCreditNote(item) },
+            { 'bg-grey-lighten-2': index % 2 !== 0 }
+          ]"
         >
->>>>>>> 1dd92ca (improvements)
+          <td class="text-center">{{ item.id }}</td>
           <td class="text-center">{{ item.supplier.name || 'SIN NOMBRE' }}</td>
           <td class="text-center">
             <SupplierTag :tags="item.tags" />
@@ -49,16 +40,11 @@
           <td class="text-center">{{ item.supplier.idNumber }}</td>
           <td class="text-center">{{ item.business.name }}</td>
 
-<<<<<<< HEAD
-          <td class="text-center">${{ Number(item.total) }}</td>
-          <td class="text-center">{{ item.type || '-' }}</td>
-=======
           <td class="text-center">
             <!-- ${{ Number(item.total) }} -->
-
             <Amount :bill="item" :payroll="item.payroll" type="bill" />
           </td>
->>>>>>> 1dd92ca (improvements)
+          <td class="text-center">{{ item.type || '-' }}</td>
 
           <td class="text-center">
             <span v-if="item.payroll === null">S/L</span>
@@ -115,10 +101,12 @@
                 <VBtn
                   variant="outlined"
                   size="small"
+                  color="error"
                   :disabled="!canDeleteInvoice(item)"
                   :loading="loading"
                   @click="emitter('delete', item)"
-                  >Eliminar</VBtn
+                >
+                  X</VBtn
                 >
               </v-col>
             </v-row>

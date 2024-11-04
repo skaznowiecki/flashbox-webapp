@@ -18,7 +18,11 @@
         </tr>
       </thead>
       <tbody class="text-body-2">
-        <tr v-for="item in creditNotes" :key="item.pk">
+        <tr
+          v-for="(item, index) in creditNotes"
+          :key="item.pk"
+          :class="{ 'bg-grey-lighten-2': index % 2 === 0 }"
+        >
           <td class="text-center">{{ item.supplier.name || 'SIN NOMBRE' }}</td>
           <td class="text-center">
             <SupplierTag :tags="item.tags" />
