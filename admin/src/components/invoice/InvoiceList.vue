@@ -3,9 +3,14 @@
     <VTable class="elevation-1 rounded-lg">
       <thead class="text-uppercase text-subtitle-2">
         <tr>
+<<<<<<< HEAD
           <th class="text-center">ID</th>
           <th class="text-center" style="width: 15%">Razon social</th>
           <th class="text-center" style="width: 15%">Tags</th>
+=======
+          <th class="text-center" style="width: 10%">Razon social</th>
+          <th class="text-center">Tags</th>
+>>>>>>> 1dd92ca (improvements)
           <th class="text-center">CUIL/CUIT</th>
           <th class="text-center">Empresa</th>
 
@@ -13,6 +18,7 @@
           <th class="text-center">Tipo</th>
 
           <th class="text-center">Liquidacion</th>
+          <th class="text-center">Mes</th>
 
           <th class="text-center">Emision</th>
           <th class="text-center">Recepcion</th>
@@ -24,11 +30,18 @@
       </thead>
       <tbody class="text-body-2">
         <tr
+<<<<<<< HEAD
           v-for="item in invoices"
           :key="item.pk"
           :class="{ 'credit-note-item': hasCreditNote(item) }"
         >
           <td class="text-center">{{ item.id }}</td>
+=======
+          v-for="(item, index) in invoices"
+          :key="item.pk"
+          :class="{ 'bg-grey-lighten-2': index % 2 !== 0 }"
+        >
+>>>>>>> 1dd92ca (improvements)
           <td class="text-center">{{ item.supplier.name || 'SIN NOMBRE' }}</td>
           <td class="text-center">
             <SupplierTag :tags="item.tags" />
@@ -36,11 +49,25 @@
           <td class="text-center">{{ item.supplier.idNumber }}</td>
           <td class="text-center">{{ item.business.name }}</td>
 
+<<<<<<< HEAD
           <td class="text-center">${{ Number(item.total) }}</td>
           <td class="text-center">{{ item.type || '-' }}</td>
+=======
+          <td class="text-center">
+            <!-- ${{ Number(item.total) }} -->
+
+            <Amount :bill="item" :payroll="item.payroll" type="bill" />
+          </td>
+>>>>>>> 1dd92ca (improvements)
 
           <td class="text-center">
-            <Amount :bill="item" :payroll="item.payroll" type="payroll" />
+            <span v-if="item.payroll === null">S/L</span>
+            <span v-else> ${{ Number(item.payroll.amount) }} </span>
+          </td>
+
+          <td class="text-center">
+            <span v-if="item.payroll === null">S/L</span>
+            <span v-else>{{ getMonth(item.payroll.month) }}</span>
           </td>
 
           <td class="text-center">{{ item.dateOfIssue }}</td>
@@ -112,6 +139,7 @@
 import { computed } from 'vue'
 
 import { useAuthorizer } from '@/composables/authorizer'
+import { months } from '@/data/constants.json'
 
 const { canAction } = useAuthorizer()
 
@@ -141,4 +169,8 @@ const props = defineProps({
 const invoices = computed(() => {
   return props.invoices
 })
+
+const getMonth = (month) => {
+  return months.find((item) => item.value === month).key
+}
 </script>

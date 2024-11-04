@@ -13,7 +13,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in suppliers" :key="item.id">
+        <tr
+          v-for="(item, index) in suppliers"
+          :key="item.id"
+          :class="{ 'bg-grey-lighten-2': index % 2 !== 0 }"
+        >
           <td class="text-center">{{ item.name }}</td>
           <td class="text-center">{{ item.idNumber }}</td>
           <td class="text-center">{{ item.condition }}</td>
@@ -46,6 +50,17 @@
                   Tags
                 </v-btn>
               </v-col>
+              <v-col cols="auto">
+                <v-btn
+                  size="small"
+                  @click="emitter('deleteSupplier', item)"
+                  variant="outlined"
+                  color="error"
+                  :disabled="!canAction('delete-supplier') || loading"
+                >
+                  X
+                </v-btn>
+              </v-col>
             </v-row>
           </td>
         </tr>
@@ -61,7 +76,7 @@ import { useAuthorizer } from '@/composables/authorizer'
 
 const { canAction } = useAuthorizer()
 
-const emitter = defineEmits(['editTags'])
+const emitter = defineEmits(['editTags', 'deleteSupplier'])
 
 const props = defineProps({
   suppliers: {
@@ -70,6 +85,10 @@ const props = defineProps({
   },
   tags: {
     type: Array,
+    required: true
+  },
+  loading: {
+    type: Boolean,
     required: true
   }
 })

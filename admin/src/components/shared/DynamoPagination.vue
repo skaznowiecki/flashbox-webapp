@@ -5,7 +5,7 @@
         <v-btn
           color="indigo"
           size="small"
-          :disabled="prevToken.length === 0"
+          :disabled="prevToken.length <= 0"
           @click="clickPrevToken"
         >
           Anterior
@@ -21,31 +21,23 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-const props = defineProps({
-  nextToken: {
-    type: String,
-    required: false
-  }
-})
-
-let currentToken = null
+import { computed, ref } from 'vue'
+const props = defineProps(['nextToken'])
 let prevToken = ref([])
+let currentToken = ref(null)
 let nextToken = computed(() => props.nextToken || null)
 
 const emitter = defineEmits(['changePage'])
 
 const clickPrevToken = () => {
-  const token = prevToken.value.pop()
-  currentToken = token
+  currentToken.value = prevToken.value.pop()
 
-  emitter('changePage', { token })
+  emitter('changePage', { token: currentToken.value })
 }
 
 const clickNextToken = () => {
-  prevToken.value.push(currentToken)
-
-  currentToken = nextToken.value
+  prevToken.value.push(currentToken.value)
+  currentToken.value = nextToken.value
 
   emitter('changePage', { token: nextToken.value })
 }

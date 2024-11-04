@@ -10,7 +10,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in users" :key="item.pk">
+        <tr
+          v-for="(item, index) in users"
+          :key="item.id"
+          :class="{ 'bg-grey-lighten-2': index % 2 !== 0 }"
+        >
           <td class="text-center">{{ item.name }}</td>
           <td class="text-center">{{ item.email }}</td>
           <td class="text-center">

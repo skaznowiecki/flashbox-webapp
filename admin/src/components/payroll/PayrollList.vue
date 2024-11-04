@@ -20,7 +20,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in payrolls" :key="item.id">
+        <tr
+          v-for="(item, index) in payrolls"
+          :key="item.id"
+          :class="{ 'bg-grey-lighten-2': index % 2 !== 0 }"
+        >
           <td class="text-center">{{ item.supplier.name }}</td>
           <td class="text-center">{{ item.supplier.idNumber }}</td>
 

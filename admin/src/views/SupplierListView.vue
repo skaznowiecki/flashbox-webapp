@@ -9,7 +9,13 @@
         @openAddTag="openAddTag"
         @openImport="openImport"
       />
-      <SupplierList :suppliers="suppliers" @editTags="editSupplierTags" :tags="tags" />
+      <SupplierList
+        :suppliers="suppliers"
+        @editTags="editSupplierTags"
+        @deleteSupplier="deleteSupplier"
+        :tags="tags"
+        :loading="loading"
+      />
       <Pagination :pages="pages" @changePage="changePage" />
 
       <VDialog v-model="supplierTagForm" persistent width="1024">
@@ -49,7 +55,7 @@
 
 <script setup>
 import { API } from 'aws-amplify'
-import { ref, onMounted, reactive, watch } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 
 import AppModernLayout from '@/layouts/AppModernLayout.vue'
 import SupplierList from '@/components/supplier/SupplierList.vue'
@@ -123,7 +129,7 @@ const openAddTag = () => {
   supplierTagForm.value = true
 }
 
-const closeSupplierTag = (value) => {
+const closeSupplierTag = () => {
   supplierTagForm.value = false
 }
 
@@ -147,6 +153,15 @@ const openListTags = () => {
 
 const closeSupplierTagList = () => {
   supplierTagList.value = false
+}
+
+const deleteSupplier = async (supplier) => {
+  loading.value = true
+  await API.del('api', `/suppliers/${supplier.id}`)
+  suppliers.value = suppliers.value.filter((item) => item.id !== supplier.id)
+  loading.value = false
+
+  fetchSupplierTagCount()
 }
 
 const deleteSupplierTag = async (id) => {

@@ -8,6 +8,7 @@
     "edit-supplier-tags": ["admin", "superadmin", "user"],
     "list-tags": ["admin", "superadmin", "user"],
     "create-tag": ["admin", "superadmin"],
-    "assign-credit-note": ["admin", "superadmin"]
+    "assign-credit-note": ["admin", "superadmin"],
+    "delete-supplier": ["admin", "superadmin"]
   }
 }
