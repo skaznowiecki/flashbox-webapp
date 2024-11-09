@@ -7,6 +7,9 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig((mode) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
   return {
+    define: {
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true
+    },
     plugins: [vue()],
     resolve: {
       alias: {

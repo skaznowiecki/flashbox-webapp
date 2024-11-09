@@ -9,6 +9,9 @@
         :disabled="disabled"
       />
     </v-col>
+    <v-col cols="auto" v-else>
+      <span>---</span>
+    </v-col>
   </v-row>
 </template>
 
@@ -29,16 +32,12 @@ const loading = computed(() => {
 })
 
 const shouldShowAttachButton = computed(() => {
-  return ['PENDIENTE', 'ADJUNTADA', 'ERROR', 'PROCESANDO'].includes(payroll.value.status)
+  return ['PENDIENTE', 'ERROR', 'PROCESANDO'].includes(payroll.value.status)
 })
 
 const attachButtonText = computed(() => {
   if (payroll.value.status === 'ERROR') {
     return 'Adjuntar NC'
-  }
-
-  if (payroll.value.status === 'ADJUNTADA') {
-    return 'Re adjuntar FC'
   }
 
   if (payroll.value.status === 'PROCESANDO') {
@@ -57,7 +56,7 @@ const attachButtonColor = computed(() => {
 })
 
 const disabled = computed(() => {
-  return ['PROCESANDO', 'PAGADA'].includes(payroll.value.status) || loading === true
+  return ['PROCESANDO', 'PAGADA'].includes(payroll.value.status) || loading.value === true
 })
 
 const uploadFile = (file) => {

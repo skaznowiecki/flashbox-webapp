@@ -61,6 +61,10 @@ const check = computed(() => {
     return [false, 'El proveedor de la factura no coincide con el de la liquidacion']
   }
 
+  if (props.bill.type === 'B') {
+    return [false, 'La factura es de tipo B']
+  }
+
   if (props.bill.type !== null && ['A', 'C', 'M'].includes(props.bill.type)) {
     return payrollInvoiceCheckWithType(
       Number(props.payroll.amount),

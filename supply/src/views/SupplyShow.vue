@@ -1,17 +1,43 @@
 <template>
   <div class="d-flex align-center justify-center mt-10">
     <v-card class="mx-auto" width="800" v-if="exists" :loading="loading">
-      <v-card-title class="text-center text-h4"> Recepción de facturas </v-card-title>
-      <v-divider></v-divider>
-      <v-card-text>
-        <PayrollFilter @update:toggle="updateToggle" />
-        <PayrollList
-          :payrolls="payrollToDisplay"
-          @uploadFile="uploadFile"
-          @showInfo="showInfo"
-          :loading="loading"
-        />
-      </v-card-text>
+      <v-card-title class="text-center justify-center py-6">
+        <h2 class="font-weight-bold text-h3 text-basil">Recepción de facturas</h2>
+      </v-card-title>
+      <v-divider class="mb-5 mt-5"></v-divider>
+
+      <v-tabs v-model="tab" color="basil" grow>
+        <v-tab value="current" text="Facturas actuales"> </v-tab>
+        <v-tab value="historical" text="Historial de facturas"></v-tab>
+      </v-tabs>
+
+      <v-tabs-window v-model="tab">
+        <v-tabs-window-item value="current" key="current">
+          <v-card color="basil" flat>
+            <v-card-text>
+              <PayrollList
+                :payrolls="currentPayroll"
+                @uploadFile="uploadFile"
+                @showInfo="showInfo"
+                :loading="loading"
+              />
+            </v-card-text>
+          </v-card>
+        </v-tabs-window-item>
+
+        <v-tabs-window-item value="historical" key="current">
+          <v-card color="basil" flat>
+            <v-card-text>
+              <PayrollList
+                :payrolls="historyPayroll"
+                @uploadFile="uploadFile"
+                @showInfo="showInfo"
+                :loading="loading"
+              />
+            </v-card-text>
+          </v-card>
+        </v-tabs-window-item>
+      </v-tabs-window>
     </v-card>
     <PayrollNotFound v-else />
 
@@ -31,7 +57,6 @@ import { useRoute } from 'vue-router'
 import { onMounted, ref, computed } from 'vue'
 import { API } from 'aws-amplify'
 import PayrollList from '@/components/PayrollList.vue'
-import PayrollFilter from '@/components/PayrollFilter.vue'
 import PayrollNotFound from '@/components/PayrollNotFound.vue'
 import PayrollShowInfo from '@/components/PayrollShowInfo.vue'
 import { getCurrentAndPreviousMonths } from '@/utils/payroll'
@@ -43,9 +68,7 @@ const payrolls = ref([])
 
 let filter = ref('current')
 
-const updateToggle = (value) => {
-  filter.value = value
-}
+const tab = ref('current')
 
 let exists = ref(true)
 let loading = ref(true)
@@ -59,14 +82,6 @@ const fetchPayroll = async (id) => {
     loading.value = false
   }
 }
-
-const payrollToDisplay = computed(() => {
-  if (filter.value === 'current') {
-    return currentPayroll.value
-  } else {
-    return historyPayroll.value
-  }
-})
 
 const currentPayroll = computed(() => {
   const dates = getCurrentAndPreviousMonths(NUMBER_OF_MONTHS)

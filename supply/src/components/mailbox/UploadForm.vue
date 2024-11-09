@@ -112,7 +112,7 @@ onMounted(async () => {
   if (props.supplierId !== undefined) {
     const response = await useListSupplyPayrolls(props.supplierId)
 
-    payrolls.value = getCurrentAndPreviousPayrolls(response, 3).filter(
+    payrolls.value = getCurrentAndPreviousPayrolls(response, 5).filter(
       (item) => item.status !== 'PAGADO'
     )
   } else {

@@ -102,7 +102,7 @@
                   variant="outlined"
                   size="small"
                   color="error"
-                  :disabled="!canDeleteInvoice(item)"
+                  :disabled="!canAction('delete-invoice')"
                   :loading="loading"
                   @click="emitter('delete', item)"
                 >
@@ -138,10 +138,6 @@ const emitter = defineEmits(['delete', 'show'])
 
 const hasCreditNote = (item) => {
   return item.creditNote !== null
-}
-
-const canDeleteInvoice = (item) => {
-  return canAction('delete-invoice') && item.payroll === null
 }
 
 const props = defineProps({

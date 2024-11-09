@@ -39,7 +39,7 @@
               class="text-white"
               size="small"
               :color="getColor(item.status)"
-              :disabled="true"
+              @click="emitter('changeStatus', item)"
               flat
               >{{ item.status }}</v-btn
             >
@@ -105,7 +105,7 @@ import { useAuthorizer } from '@/composables/authorizer'
 
 const { canAction } = useAuthorizer()
 
-const emitter = defineEmits(['delete', 'showInfo'])
+const emitter = defineEmits(['delete', 'showInfo', 'changeStatus'])
 
 const getColor = (status) => {
   const { color } = payrollStatus.find((item) => item.value === status)

@@ -6,6 +6,7 @@
       <PayrollList
         :payrolls="payrolls"
         :pages="pages"
+        @changeStatus="changeStatus"
         @delete="deletePayroll"
         @showInfo="showInfo"
         :loading="loading"
@@ -29,6 +30,15 @@
           @close="closeShowInfo"
         />
       </VDialog>
+
+      <VDialog v-model="changeStatusForm" persistent width="700">
+        <PayrollChangeStatus
+          :loading="loading"
+          :status="status"
+          @close="closeChangeStatus"
+          @submit="submitChangeStatus"
+        />
+      </VDialog>
     </VRow>
   </AppModernLayout>
 </template>
@@ -45,6 +55,7 @@ import PayrollImportForm from '@/components/payroll/PayrollImportForm.vue'
 
 import { ref, onMounted } from 'vue'
 import PayrollShowInfo from '@/components/payroll/PayrollShowInfo.vue'
+import PayrollChangeStatus from '../components/payroll/PayrollChangeStatus.vue'
 
 let payrolls = ref([])
 let pages = ref(1)
@@ -117,6 +128,31 @@ const showInfo = (payroll) => {
 
 const closeShowInfo = () => {
   showInfoForm.value = false
+}
+
+// change status
+
+let changeStatusForm = ref(false)
+let status = ref(null)
+let payrollId = null
+
+const changeStatus = (payroll) => {
+  payrollId = payroll.id
+  changeStatusForm.value = true
+  status.value = payroll.status
+}
+
+const closeChangeStatus = () => {
+  changeStatusForm.value = false
+}
+
+const submitChangeStatus = async (status) => {
+  loading.value = true
+  await API.put('api', `/payrolls/${payrollId}`, { body: { status } })
+  loading.value = false
+
+  changeStatusForm.value = false
+  fetchPayrolls()
 }
 
 // import form

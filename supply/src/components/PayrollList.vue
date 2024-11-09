@@ -16,7 +16,7 @@
           <tr v-for="item in payrolls" :key="item.id" class="text-left">
             <td><PayrollListDate :payroll="item" /></td>
             <td>${{ item.amount }}</td>
-            <td>{{ item.message ?? '' }}</td>
+            <td class="text-center">{{ renderMessage(item) }}</td>
             <td class="text-center">
               <v-btn
                 size="small"
@@ -55,6 +55,16 @@ import PayrollListButton from '@/components/PayrollListButton.vue'
 
 const props = defineProps(['payrolls', 'loading'])
 const emitter = defineEmits(['uploadFile', 'showInfo'])
+
+const renderMessage = (item) => {
+  if (item.status === 'PAGADO') {
+    return 'Pagado'
+  }
+  if (item.message) {
+    return item.message
+  }
+  return '---'
+}
 
 const payrolls = computed(() => {
   return props.payrolls.sort((a, b) => {
