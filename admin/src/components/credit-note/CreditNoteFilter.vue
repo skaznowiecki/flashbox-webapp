@@ -69,7 +69,8 @@ import { reactive } from 'vue'
 const companies = [
   { key: 'TODOS', value: '' },
   { key: 'INTERMEDIO S.R.L.', value: '33714517029' },
-  { key: 'FLASHBOX', value: '30716842238' }
+  { key: 'FLASHBOX', value: '30716842238' },
+  { key: 'QUICH', value: '30718129113' }
 ]
 
 defineProps({
