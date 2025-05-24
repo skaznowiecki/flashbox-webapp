@@ -3,61 +3,31 @@
     <v-form fast-fail ref="invoiceForm">
       <VRow>
         <VCol cols="12">
-          <v-text-field
-            type="number"
-            v-model="invoice.businessId"
-            label="CUIT / CUIL EMISOR"
-            variant="outlined"
-            :rules="bussinesIdValidation"
-          ></v-text-field>
+          <v-text-field type="number" v-model="invoice.businessId" label="CUIT / CUIL EMISOR" variant="outlined"
+            :rules="bussinesIdValidation"></v-text-field>
         </VCol>
 
         <VCol cols="12">
-          <v-text-field
-            type="number"
-            v-model="invoice.receiverBussinesId"
-            label="CUIT / CUIL RECEPTOR"
-            variant="outlined"
-            :rules="receiverBussinesIdValidation"
-          ></v-text-field>
+          <v-text-field type="number" v-model="invoice.receiverBussinesId" label="CUIT / CUIL RECEPTOR"
+            variant="outlined" :rules="receiverBussinesIdValidation"></v-text-field>
         </VCol>
 
         <VCol cols="12">
-          <v-text-field
-            type="number"
-            v-model="invoice.total"
-            label="Monto total"
-            variant="outlined"
-            :rules="amountValidation"
-          ></v-text-field>
+          <v-text-field type="number" v-model="invoice.total" label="Monto total" variant="outlined"
+            :rules="amountValidation"></v-text-field>
         </VCol>
 
         <VCol cols="12">
-          <VSelect
-            :items="isCreditItems"
-            v-model="invoice.isCreditNote"
-            label="Es nota de credito ?"
-            variant="outlined"
-            :rules="isCreditValidation"
-          />
+          <VSelect :items="isCreditItems" v-model="invoice.isCreditNote" label="Es nota de credito ?" variant="outlined"
+            :rules="isCreditValidation" />
         </VCol>
 
         <VCol cols="12">
-          <v-textarea
-            v-model="invoice.description"
-            label="Descripción de la factura"
-            :rules="descriptionValidation"
-          ></v-textarea>
+          <v-textarea v-model="invoice.description" label="Descripción de la factura"
+            :rules="descriptionValidation"></v-textarea>
         </VCol>
         <VCol cols="12">
-          <v-btn
-            variant="flat"
-            color="blue"
-            block
-            :disabled="!submitEnable"
-            :loading="loading"
-            @click="submit"
-          >
+          <v-btn variant="flat" color="blue" block :disabled="!submitEnable" :loading="loading" @click="submit">
             Enviar
           </v-btn>
         </VCol>
@@ -106,7 +76,7 @@ const amountValidation = [
   }
 ]
 
-const IDS = ['33714517029', '30716842238', '30718129113']
+const IDS = ['33714517029', '30716842238', '30718129113', '30718295706']
 
 const receiverBussinesIdValidation = [
   (value) => {
