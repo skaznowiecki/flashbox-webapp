@@ -20,11 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(item, index) in payrolls"
-          :key="item.id"
-          :class="{ 'bg-grey-lighten-2': index % 2 !== 0 }"
-        >
+        <tr v-for="(item, index) in payrolls" :key="item.id" :class="{ 'bg-grey-lighten-2': index % 2 !== 0 }">
           <td class="text-center">{{ item.supplier.name }}</td>
           <td class="text-center">{{ item.supplier.idNumber }}</td>
 
@@ -35,24 +31,12 @@
           <td class="text-center">{{ item.year }}</td>
           <td class="text-center">{{ item.detail }}</td>
           <td class="text-center">
-            <v-btn
-              class="text-white"
-              size="small"
-              :color="getColor(item.status)"
-              @click="emitter('changeStatus', item)"
-              flat
-              >{{ item.status }}</v-btn
-            >
+            <v-btn class="text-white" size="small" :color="getColor(item.status)" @click="emitter('changeStatus', item)"
+              flat>{{ item.status }}</v-btn>
           </td>
           <td class="text-center">
-            <VBtn
-              :href="item.bill.invoiceUrl"
-              target="_blank"
-              variant="outlined"
-              size="small"
-              v-if="item.bill !== null"
-              >PDF</VBtn
-            >
+            <VBtn :href="item.bill.invoiceUrl" target="_blank" variant="outlined" size="small"
+              v-if="item.bill !== null">PDF</VBtn>
           </td>
 
           <td class="text-center">${{ item.amount }}</td>
@@ -63,28 +47,30 @@
             +{{ item.paymentPeriod || item.supplier.paymentPeriod || '-' }}
           </td>
 
-          <td class="text-center">
-            <v-row align="center" justify="center">
+          <td class="text-center align-middle">
+            <v-row align="center" justify="center" no-gutters>
               <v-col cols="auto">
-                <v-btn
-                  size="small"
-                  @click="emitter('showInfo', item)"
-                  variant="outlined"
-                  v-if="item.information !== null || item.discount !== null"
-                >
+                <v-btn size="small" @click="emitter('showInfo', item)" variant="outlined"
+                  v-if="item.information !== null || item.discount !== null">
                   Info
                 </v-btn>
               </v-col>
               <v-col cols="auto">
-                <v-btn
-                  size="small"
-                  @click="emitter('delete', item)"
-                  variant="outlined"
-                  :loading="loading"
-                  :disabled="!canAction('delete-payroll')"
-                >
-                  Eliminar
-                </v-btn>
+                <v-menu>
+                  <template v-slot:activator="{ props }">
+                    <v-btn size="small" variant="outlined" v-bind="props" append-icon="mdi-chevron-down">
+                      Acciones
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <v-list-item :disabled="item.bill == null || loading" @click="emitter('attach-retention', item)">
+                      <v-list-item-title>Adjuntar Retención</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="emitter('delete', item)" :disabled="!canAction('delete-payroll') || loading">
+                      <v-list-item-title>Eliminar</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
               </v-col>
             </v-row>
           </td>
@@ -105,7 +91,7 @@ import { useAuthorizer } from '@/composables/authorizer'
 
 const { canAction } = useAuthorizer()
 
-const emitter = defineEmits(['delete', 'showInfo', 'changeStatus'])
+const emitter = defineEmits(['delete', 'showInfo', 'changeStatus', 'attach-retention'])
 
 const getColor = (status) => {
   const { color } = payrollStatus.find((item) => item.value === status)

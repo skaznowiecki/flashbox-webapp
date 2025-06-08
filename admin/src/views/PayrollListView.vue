@@ -3,41 +3,27 @@
     <VRow class="mt-1">
       <PayrollFilter :tags="tags" @change="filter" />
       <PayrollAction @openImport="openImport" @download="downloadExcel" :loading="loading" />
-      <PayrollList
-        :payrolls="payrolls"
-        :pages="pages"
-        @changeStatus="changeStatus"
-        @delete="deletePayroll"
-        @showInfo="showInfo"
-        :loading="loading"
-      />
+      <PayrollList :payrolls="payrolls" :pages="pages" @changeStatus="changeStatus" @delete="deletePayroll"
+        @showInfo="showInfo" @attach-retention="attachRetention" :loading="loading" />
       <Pagination :pages="pages" @changePage="changePage" />
 
       <VDialog v-model="importForm" persistent width="700">
-        <PayrollImportForm
-          :loading="loading"
-          @download="downloadExample"
-          @submit="submitImportFile"
-          @close="closeImportForm"
-        />
+        <PayrollImportForm :loading="loading" @download="downloadExample" @submit="submitImportFile"
+          @close="closeImportForm" />
       </VDialog>
 
       <VDialog v-model="showInfoForm" persistent width="700">
-        <PayrollShowInfo
-          :loading="loading"
-          :information="information"
-          :discount="discount"
-          @close="closeShowInfo"
-        />
+        <PayrollShowInfo :loading="loading" :information="information" :discount="discount" @close="closeShowInfo" />
       </VDialog>
 
       <VDialog v-model="changeStatusForm" persistent width="700">
-        <PayrollChangeStatus
-          :loading="loading"
-          :status="status"
-          @close="closeChangeStatus"
-          @submit="submitChangeStatus"
-        />
+        <PayrollChangeStatus :loading="loading" :status="status" @close="closeChangeStatus"
+          @submit="submitChangeStatus" />
+      </VDialog>
+
+      <VDialog v-model="attachRetentionForm" persistent width="700">
+        <PayrollAttachRetention v-if="selectedPayroll" :loading="loading" :payroll="selectedPayroll"
+          @close="closeAttachRetention" @submit="submitAttachRetention" />
       </VDialog>
     </VRow>
   </AppModernLayout>
@@ -56,6 +42,12 @@ import PayrollImportForm from '@/components/payroll/PayrollImportForm.vue'
 import { ref, onMounted } from 'vue'
 import PayrollShowInfo from '@/components/payroll/PayrollShowInfo.vue'
 import PayrollChangeStatus from '../components/payroll/PayrollChangeStatus.vue'
+import PayrollAttachRetention from '@/components/payroll/PayrollAttachRetention.vue'
+import { useApiV2 } from '@/composables/useApiV2'
+import { useFeatureFlags } from '@/composables/feature-flags'
+
+const { get, post } = useApiV2()
+const { isFeatureFlagEnabled } = useFeatureFlags()
 
 let payrolls = ref([])
 let pages = ref(1)
@@ -82,7 +74,16 @@ const fetchPayrolls = async () => {
       page: currentPage
     }
   }
-  const response = await API.get('api', '/payrolls/search', params)
+  let response = null;
+
+  if (isFeatureFlagEnabled('PAYROLL', 'SEARCH')) {
+    console.log('fetching payrolls v2')
+    response = await get('/payrolls', { params: { ...params.queryStringParameters } })
+  } else {
+    console.log('fetching payrolls v1')
+    response = await API.get('api', '/payrolls/search', params)
+  }
+
   payrolls.value = response.data
   pages.value = Number(response.pages)
   currentPage = Number(response.currentPage)
@@ -155,6 +156,63 @@ const submitChangeStatus = async (status) => {
   fetchPayrolls()
 }
 
+// attach retention
+
+let attachRetentionForm = ref(false)
+let selectedPayroll = ref(null)
+
+const attachRetention = (payroll) => {
+  selectedPayroll.value = payroll
+  attachRetentionForm.value = true
+}
+
+const closeAttachRetention = () => {
+  attachRetentionForm.value = false
+  selectedPayroll.value = null
+}
+
+const submitAttachRetention = async ({ file, payrollId }) => {
+  loading.value = true
+
+  try {
+    // Get upload URL for tax withholding
+    const { fileKey, uploadUrl } = await post(`/payrolls/${payrollId}/tax-retentions/upload`, {
+      filename: file.name,
+      contentType: file.type
+    })
+
+    // Upload the file directly using PUT (required for presigned URLs from PutObjectCommand)
+    const uploadResponse = await fetch(uploadUrl, {
+      method: 'PUT',
+      body: file,
+      headers: {
+        'Content-Type': file.type
+      }
+    })
+
+    // Only proceed if upload was successful
+    if (uploadResponse.ok) {
+      await post(`/payrolls/${payrollId}/tax-retentions`, {
+        fileKey: fileKey
+      })
+    } else {
+      throw new Error(`File upload failed with status: ${uploadResponse.status}`)
+    }
+
+    loading.value = false
+    attachRetentionForm.value = false
+    selectedPayroll.value = null
+
+    // Refresh the payrolls list to show updated data
+    setTimeout(() => {
+      fetchPayrolls()
+    }, 1000)
+  } catch (error) {
+    console.error('Error uploading tax withholding:', error)
+    loading.value = false
+  }
+}
+
 // import form
 
 let importForm = ref(false)
@@ -200,6 +258,8 @@ const deletePayroll = async ({ id }) => {
 
   payrolls.value = payrolls.value.filter((item) => item.id !== id)
 }
+
+
 
 // DOWNLOAD EXAMPLE
 
