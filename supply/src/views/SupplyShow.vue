@@ -15,12 +15,8 @@
         <v-tabs-window-item value="current" key="current">
           <v-card color="basil" flat>
             <v-card-text>
-              <PayrollList
-                :payrolls="currentPayroll"
-                @uploadFile="uploadFile"
-                @showInfo="showInfo"
-                :loading="loading"
-              />
+              <PayrollList :payrolls="currentPayroll" @uploadFile="uploadFile" @showInfo="showInfo"
+                :loading="loading" />
             </v-card-text>
           </v-card>
         </v-tabs-window-item>
@@ -28,12 +24,8 @@
         <v-tabs-window-item value="historical" key="current">
           <v-card color="basil" flat>
             <v-card-text>
-              <PayrollList
-                :payrolls="historyPayroll"
-                @uploadFile="uploadFile"
-                @showInfo="showInfo"
-                :loading="loading"
-              />
+              <PayrollList :payrolls="historyPayroll" @uploadFile="uploadFile" @showInfo="showInfo"
+                :loading="loading" />
             </v-card-text>
           </v-card>
         </v-tabs-window-item>
@@ -42,12 +34,7 @@
     <PayrollNotFound v-else />
 
     <VDialog v-model="showInfoForm" persistent width="700">
-      <PayrollShowInfo
-        :loading="loading"
-        :information="information"
-        :discount="discount"
-        @close="closeShowInfo"
-      />
+      <PayrollShowInfo :loading="loading" :information="information" :discount="discount" @close="closeShowInfo" />
     </VDialog>
   </div>
 </template>
@@ -60,13 +47,12 @@ import PayrollList from '@/components/PayrollList.vue'
 import PayrollNotFound from '@/components/PayrollNotFound.vue'
 import PayrollShowInfo from '@/components/PayrollShowInfo.vue'
 import { getCurrentAndPreviousMonths } from '@/utils/payroll'
+import { useListSupplyPayrolls } from "@/composables/payroll"
 
 const NUMBER_OF_MONTHS = 2
 const route = useRoute()
 
 const payrolls = ref([])
-
-let filter = ref('current')
 
 const tab = ref('current')
 
@@ -75,7 +61,8 @@ let loading = ref(true)
 
 const fetchPayroll = async (id) => {
   try {
-    payrolls.value = await API.get('api', `/payrolls/supplier/${id}`)
+
+    payrolls.value = await useListSupplyPayrolls(id)
   } catch (error) {
     exists.value = false
   } finally {
